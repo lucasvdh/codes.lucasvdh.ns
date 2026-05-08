@@ -1,0 +1,57 @@
+{
+  "id": "train_in_window",
+  "title": {
+    "en": "Get train in time window",
+    "nl": "Haal trein op in tijdvenster",
+    "de": "Zug im Zeitfenster abrufen"
+  },
+  "titleFormatted": {
+    "en": "Train from [[from]] to [[to]] departing between [[time_from]] and [[time_to]]",
+    "nl": "Trein van [[from]] naar [[to]] tussen [[time_from]] en [[time_to]]",
+    "de": "Zug von [[from]] nach [[to]] zwischen [[time_from]] und [[time_to]]"
+  },
+  "args": [
+    { "name": "from", "type": "autocomplete",
+      "title": { "en": "From", "nl": "Van", "de": "Von" },
+      "placeholder": { "en": "Origin station", "nl": "Vertrekstation", "de": "Abfahrtsbahnhof" } },
+    { "name": "to", "type": "autocomplete",
+      "title": { "en": "To", "nl": "Naar", "de": "Nach" },
+      "placeholder": { "en": "Destination station", "nl": "Aankomststation", "de": "Zielbahnhof" } },
+    { "name": "time_from", "type": "time",
+      "title": { "en": "From time", "nl": "Vanaf tijd", "de": "Ab Uhrzeit" },
+      "placeholder": { "en": "08:00", "nl": "08:00", "de": "08:00" } },
+    { "name": "time_to", "type": "time",
+      "title": { "en": "Until time", "nl": "Tot tijd", "de": "Bis Uhrzeit" },
+      "placeholder": { "en": "08:30", "nl": "08:30", "de": "08:30" } }
+  ],
+  "tokens": [
+    { "name": "found", "type": "boolean",
+      "title": { "en": "Train found", "nl": "Trein gevonden", "de": "Zug gefunden" }, "example": true },
+    { "name": "summary", "type": "string",
+      "title": { "en": "Summary", "nl": "Samenvatting", "de": "Übersicht" }, "example": "08:12 (track 5a, +5 min)" },
+    { "name": "departure_time", "type": "string",
+      "title": { "en": "Departure", "nl": "Vertrek", "de": "Abfahrt" }, "example": "08:12" },
+    { "name": "arrival_time", "type": "string",
+      "title": { "en": "Arrival", "nl": "Aankomst", "de": "Ankunft" }, "example": "09:00" },
+    { "name": "track", "type": "string",
+      "title": { "en": "Track", "nl": "Spoor", "de": "Gleis" }, "example": "5a" },
+    { "name": "delay_minutes", "type": "number",
+      "title": { "en": "Delay (min)", "nl": "Vertraging (min)", "de": "Verspätung (Min)" }, "example": 5 },
+    { "name": "transfers", "type": "number",
+      "title": { "en": "Transfers", "nl": "Overstappen", "de": "Umstiege" }, "example": 1 },
+    { "name": "cancelled", "type": "boolean",
+      "title": { "en": "Cancelled", "nl": "Uitgevallen", "de": "Ausgefallen" }, "example": false },
+    { "name": "crowd_level", "type": "string",
+      "title": { "en": "Crowd level", "nl": "Drukte", "de": "Auslastung" }, "example": "HIGH" },
+    { "name": "shorter_train", "type": "boolean",
+      "title": { "en": "Shorter train", "nl": "Kortere trein", "de": "Kürzerer Zug" }, "example": false },
+    { "name": "disruption", "type": "boolean",
+      "title": { "en": "Has disruption", "nl": "Heeft storing", "de": "Mit Störung" }, "example": false },
+    { "name": "price_eur", "type": "number",
+      "title": { "en": "Price (€)", "nl": "Prijs (€)", "de": "Preis (€)" }, "example": 12.5 },
+    { "name": "co2_kg", "type": "number",
+      "title": { "en": "CO2 (kg)", "nl": "CO2 (kg)", "de": "CO2 (kg)" }, "example": 0.8 },
+    { "name": "train_type", "type": "string",
+      "title": { "en": "Train type", "nl": "Treinsoort", "de": "Zugart" }, "example": "IC" }
+  ]
+}

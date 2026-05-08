@@ -1,0 +1,44 @@
+{
+  "id": "disruption_started",
+  "title": {
+    "en": "A disruption started",
+    "nl": "Er is een storing begonnen",
+    "de": "Eine Störung hat begonnen"
+  },
+  "titleFormatted": {
+    "en": "A disruption started with impact !{{≥|<}} [[min_impact]]",
+    "nl": "Er is een storing begonnen met impact !{{≥|<}} [[min_impact]]",
+    "de": "Eine Störung hat begonnen mit Auswirkung !{{≥|<}} [[min_impact]]"
+  },
+  "args": [
+    {
+      "name": "min_impact",
+      "type": "dropdown",
+      "title": { "en": "Minimum impact", "nl": "Minimale impact", "de": "Mindestauswirkung" },
+      "values": [
+        { "id": "0", "label": { "en": "Any (0)", "nl": "Elke (0)", "de": "Beliebig (0)" } },
+        { "id": "1", "label": { "en": "Low (1)", "nl": "Laag (1)", "de": "Gering (1)" } },
+        { "id": "2", "label": { "en": "Moderate (2)", "nl": "Matig (2)", "de": "Mäßig (2)" } },
+        { "id": "3", "label": { "en": "Significant (3)", "nl": "Aanzienlijk (3)", "de": "Erheblich (3)" } },
+        { "id": "4", "label": { "en": "High (4)", "nl": "Hoog (4)", "de": "Hoch (4)" } },
+        { "id": "5", "label": { "en": "Severe (5)", "nl": "Ernstig (5)", "de": "Schwerwiegend (5)" } }
+      ]
+    }
+  ],
+  "tokens": [
+    { "name": "title", "type": "string",
+      "title": { "en": "Title", "nl": "Titel", "de": "Titel" }, "example": "Utrecht - Amersfoort" },
+    { "name": "type", "type": "string",
+      "title": { "en": "Type", "nl": "Soort", "de": "Art" }, "example": "DISRUPTION" },
+    { "name": "impact", "type": "number",
+      "title": { "en": "Impact", "nl": "Impact", "de": "Auswirkung" }, "example": 3 },
+    { "name": "cause", "type": "string",
+      "title": { "en": "Cause", "nl": "Oorzaak", "de": "Ursache" }, "example": "Defective train" },
+    { "name": "situation", "type": "string",
+      "title": { "en": "Situation", "nl": "Situatie", "de": "Situation" }, "example": "Fewer trains" },
+    { "name": "period", "type": "string",
+      "title": { "en": "Period", "nl": "Periode", "de": "Zeitraum" }, "example": "until approx. 18:30" },
+    { "name": "affected_stations", "type": "string",
+      "title": { "en": "Affected stations", "nl": "Betrokken stations", "de": "Betroffene Bahnhöfe" }, "example": "Utrecht Centraal, Amersfoort" }
+  ]
+}

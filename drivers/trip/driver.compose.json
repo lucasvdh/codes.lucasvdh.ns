@@ -1,0 +1,54 @@
+{
+  "name": {
+    "en": "Trip",
+    "nl": "Traject",
+    "de": "Verbindung"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "next_departure_time",
+    "next_departure_track",
+    "next_departure_delay",
+    "alarm_disruption",
+    "alarm_cancelled",
+    "alarm_shorter_train",
+    "crowd_level",
+    "crowd_level_value",
+    "cancelled_value",
+    "track_value"
+  ],
+  "platforms": ["local", "cloud"],
+  "connectivity": ["cloud"],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "pair": [
+    {
+      "id": "select_route",
+      "navigation": { "next": "add_my_device" }
+    },
+    {
+      "id": "add_my_device"
+    }
+  ],
+  "settings": [
+    {
+      "id": "poll_interval_seconds",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (seconds)",
+        "nl": "Verversingsinterval (seconden)",
+        "de": "Aktualisierungsintervall (Sekunden)"
+      },
+      "hint": {
+        "en": "How often to ask the NS API for new trip information. Lower values use more of your NS API quota; the minimum of 120 seconds keeps you safely within the rate limits, also when you run multiple Trip or Station devices.",
+        "nl": "Hoe vaak de NS API om nieuwe reisinformatie wordt gevraagd. Een lagere waarde verbruikt meer van je NS API quotum; het minimum van 120 seconden houdt je veilig binnen de rate limits, ook als je meerdere Traject- of Stationapparaten hebt.",
+        "de": "Wie oft die NS-API nach neuen Reiseinformationen gefragt wird. Niedrigere Werte verbrauchen mehr von deinem NS-API-Kontingent; das Minimum von 120 Sekunden hält dich sicher innerhalb der Rate Limits, auch wenn du mehrere Verbindungs- oder Bahnhof-Geräte verwendest."
+      },
+      "value": 120,
+      "min": 120,
+      "max": 600
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "has_active_disruption",
+  "title": {
+    "en": "There !{{is|isn't}} an active disruption at",
+    "nl": "Er !{{is|is geen}} actieve storing bij",
+    "de": "Es !{{gibt|gibt keine}} aktive Störung bei"
+  },
+  "titleFormatted": {
+    "en": "There !{{is|isn't}} an active disruption at [[station]]",
+    "nl": "Er !{{is|is geen}} actieve storing bij [[station]]",
+    "de": "Es !{{gibt|gibt keine}} aktive Störung bei [[station]]"
+  },
+  "args": [
+    { "name": "station", "type": "autocomplete",
+      "title": { "en": "Station", "nl": "Station", "de": "Bahnhof" },
+      "placeholder": { "en": "Station", "nl": "Station", "de": "Bahnhof" } }
+  ]
+}

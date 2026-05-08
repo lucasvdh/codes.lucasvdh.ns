@@ -1,0 +1,33 @@
+{
+  "id": "crowd_busy",
+  "title": {
+    "en": "Train is busy",
+    "nl": "Trein is druk",
+    "de": "Zug ist voll"
+  },
+  "titleFormatted": {
+    "en": "Train is at least [[level]] busy",
+    "nl": "Trein is minstens [[level]] druk",
+    "de": "Zug ist mindestens [[level]] voll"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=trip" },
+    {
+      "name": "level",
+      "type": "dropdown",
+      "title": { "en": "Minimum crowd level", "nl": "Minimale drukte", "de": "Mindestauslastung" },
+      "values": [
+        { "id": "medium", "label": { "en": "Medium", "nl": "Gemiddeld", "de": "Mittel" } },
+        { "id": "high",   "label": { "en": "High",   "nl": "Druk",      "de": "Hoch" } }
+      ]
+    }
+  ],
+  "tokens": [
+    { "name": "departure_time", "type": "string",
+      "title": { "en": "Departure", "nl": "Vertrek", "de": "Abfahrt" }, "example": "08:42" },
+    { "name": "destination", "type": "string",
+      "title": { "en": "Destination", "nl": "Bestemming", "de": "Ziel" }, "example": "Kropswolde" },
+    { "name": "crowd_level", "type": "string",
+      "title": { "en": "Crowd level", "nl": "Drukte", "de": "Auslastung" }, "example": "HIGH" }
+  ]
+}

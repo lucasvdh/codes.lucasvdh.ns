@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Next departure",
+    "nl": "Volgende vertrek",
+    "de": "Nächste Abfahrt"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/clock.svg",
+  "getable": true,
+  "setable": false
+}

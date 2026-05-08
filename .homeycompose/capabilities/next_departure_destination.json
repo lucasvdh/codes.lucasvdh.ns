@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Next destination",
+    "nl": "Volgende bestemming",
+    "de": "Nächstes Ziel"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/destination.svg",
+  "getable": true,
+  "setable": false
+}

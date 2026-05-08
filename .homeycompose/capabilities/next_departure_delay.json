@@ -1,0 +1,20 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Delay",
+    "nl": "Vertraging",
+    "de": "Verspätung"
+  },
+  "units": {
+    "en": "min",
+    "nl": "min",
+    "de": "Min"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/delay.svg",
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "min": 0
+}

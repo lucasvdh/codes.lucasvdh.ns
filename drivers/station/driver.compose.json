@@ -1,0 +1,67 @@
+{
+  "name": {
+    "en": "Station",
+    "nl": "Station",
+    "de": "Bahnhof"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "next_departure_time",
+    "next_departure_destination",
+    "next_departure_track",
+    "next_departure_delay",
+    "alarm_disruption",
+    "alarm_cancelled",
+    "cancelled_value",
+    "track_value"
+  ],
+  "platforms": ["local", "cloud"],
+  "connectivity": ["cloud"],
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "pair": [
+    {
+      "id": "select_station",
+      "navigation": { "next": "add_my_device" }
+    },
+    {
+      "id": "add_my_device"
+    }
+  ],
+  "settings": [
+    {
+      "id": "direction_filter",
+      "type": "text",
+      "label": {
+        "en": "Direction filter (optional)",
+        "nl": "Richtingfilter (optioneel)",
+        "de": "Richtungsfilter (optional)"
+      },
+      "value": "",
+      "hint": {
+        "en": "Only show departures whose destination contains this text. Leave empty for all departures.",
+        "nl": "Toon alleen vertrekken waarvan de bestemming deze tekst bevat. Leeg laten voor alle vertrekken.",
+        "de": "Nur Abfahrten anzeigen, deren Ziel diesen Text enthält. Leer lassen für alle Abfahrten."
+      }
+    },
+    {
+      "id": "poll_interval_seconds",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (seconds)",
+        "nl": "Verversingsinterval (seconden)",
+        "de": "Aktualisierungsintervall (Sekunden)"
+      },
+      "hint": {
+        "en": "How often to ask the NS API for new departures and disruptions. Each refresh makes two API calls (departures + disruptions). Lower values use more of your NS API quota; the minimum of 60 seconds keeps you safely within the rate limits, also when you run multiple Station or Trip devices.",
+        "nl": "Hoe vaak de NS API om nieuwe vertrektijden en storingen wordt gevraagd. Elke verversing doet twee API-aanroepen (vertrekken + storingen). Een lagere waarde verbruikt meer van je NS API quotum; het minimum van 60 seconden houdt je veilig binnen de rate limits, ook als je meerdere Station- of Trajectapparaten hebt.",
+        "de": "Wie oft die NS-API nach neuen Abfahrten und Störungen gefragt wird. Jede Aktualisierung macht zwei API-Aufrufe (Abfahrten + Störungen). Niedrigere Werte verbrauchen mehr von deinem NS-API-Kontingent; das Minimum von 60 Sekunden hält dich sicher innerhalb der Rate Limits, auch wenn du mehrere Bahnhof- oder Verbindungsgeräte verwendest."
+      },
+      "value": 60,
+      "min": 60,
+      "max": 600
+    }
+  ]
+}

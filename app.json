@@ -1,0 +1,2597 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "codes.lucasvdh.ns",
+  "version": "0.1.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#003082",
+  "name": {
+    "en": "NS",
+    "nl": "NS",
+    "de": "NS"
+  },
+  "description": {
+    "en": "Dutch Railways (NS) departures, trip planning and disruptions",
+    "nl": "Vertrektijden, reisadvies en storingen van de NS",
+    "de": "Abfahrtszeiten, Reiseauskunft und Störungen der niederländischen Bahn (NS)"
+  },
+  "category": "tools",
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "tags": {
+    "en": [
+      "NS",
+      "trains",
+      "Dutch Railways",
+      "departures",
+      "disruptions"
+    ],
+    "nl": [
+      "NS",
+      "trein",
+      "vertrektijden",
+      "storingen",
+      "reisadvies"
+    ],
+    "de": [
+      "NS",
+      "Zug",
+      "Abfahrtszeiten",
+      "Störungen",
+      "Reiseauskunft"
+    ]
+  },
+  "images": {
+    "xlarge": "./assets/images/xlarge.png",
+    "large": "./assets/images/large.png",
+    "small": "./assets/images/small.png"
+  },
+  "author": {
+    "name": "Lucas van der Have",
+    "email": "lucasvdhave@gmail.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Lucas van der Have",
+        "email": "lucasvdhave@gmail.com"
+      }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/lucasvdh/codes.lucasvdh.ns/issues"
+  },
+  "source": "https://github.com/lucasvdh/codes.lucasvdh.ns",
+  "flow": {
+    "triggers": [
+      {
+        "id": "crowd_busy",
+        "title": {
+          "en": "Train is busy",
+          "nl": "Trein is druk",
+          "de": "Zug ist voll"
+        },
+        "titleFormatted": {
+          "en": "Train is at least [[level]] busy",
+          "nl": "Trein is minstens [[level]] druk",
+          "de": "Zug ist mindestens [[level]] voll"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          },
+          {
+            "name": "level",
+            "type": "dropdown",
+            "title": {
+              "en": "Minimum crowd level",
+              "nl": "Minimale drukte",
+              "de": "Mindestauslastung"
+            },
+            "values": [
+              {
+                "id": "medium",
+                "label": {
+                  "en": "Medium",
+                  "nl": "Gemiddeld",
+                  "de": "Mittel"
+                }
+              },
+              {
+                "id": "high",
+                "label": {
+                  "en": "High",
+                  "nl": "Druk",
+                  "de": "Hoch"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "crowd_level",
+            "type": "string",
+            "title": {
+              "en": "Crowd level",
+              "nl": "Drukte",
+              "de": "Auslastung"
+            },
+            "example": "HIGH"
+          }
+        ]
+      },
+      {
+        "id": "departure_cancelled",
+        "title": {
+          "en": "Next departure cancelled",
+          "nl": "Volgende vertrek uitgevallen",
+          "de": "Nächste Abfahrt ausgefallen"
+        },
+        "titleFormatted": {
+          "en": "Next departure cancelled",
+          "nl": "Volgende vertrek uitgevallen",
+          "de": "Nächste Abfahrt ausgefallen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=station"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Planned departure",
+              "nl": "Geplande vertrek",
+              "de": "Geplante Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "train_type",
+            "type": "string",
+            "title": {
+              "en": "Train type",
+              "nl": "Treinsoort",
+              "de": "Zugart"
+            },
+            "example": "IC"
+          }
+        ]
+      },
+      {
+        "id": "departure_changed",
+        "title": {
+          "en": "Next departure changed",
+          "nl": "Volgende vertrek gewijzigd",
+          "de": "Nächste Abfahrt geändert"
+        },
+        "titleFormatted": {
+          "en": "Next departure from this station changed",
+          "nl": "Volgende vertrek van dit station is gewijzigd",
+          "de": "Nächste Abfahrt von diesem Bahnhof hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=station"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          }
+        ]
+      },
+      {
+        "id": "departure_delayed",
+        "title": {
+          "en": "Next departure delayed by more than",
+          "nl": "Volgende vertrek vertraagd met meer dan",
+          "de": "Nächste Abfahrt verspätet um mehr als"
+        },
+        "titleFormatted": {
+          "en": "Next departure delayed by more than [[minutes]] minutes",
+          "nl": "Volgende vertrek vertraagd met meer dan [[minutes]] minuten",
+          "de": "Nächste Abfahrt verspätet um mehr als [[minutes]] Minuten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=station"
+          },
+          {
+            "name": "minutes",
+            "type": "number",
+            "min": 1,
+            "max": 120,
+            "step": 1,
+            "title": {
+              "en": "Minutes",
+              "nl": "Minuten",
+              "de": "Minuten"
+            },
+            "placeholder": {
+              "en": "5",
+              "nl": "5",
+              "de": "5"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 7
+          }
+        ]
+      },
+      {
+        "id": "disruption_started",
+        "title": {
+          "en": "A disruption started",
+          "nl": "Er is een storing begonnen",
+          "de": "Eine Störung hat begonnen"
+        },
+        "titleFormatted": {
+          "en": "A disruption started with impact !{{≥|<}} [[min_impact]]",
+          "nl": "Er is een storing begonnen met impact !{{≥|<}} [[min_impact]]",
+          "de": "Eine Störung hat begonnen mit Auswirkung !{{≥|<}} [[min_impact]]"
+        },
+        "args": [
+          {
+            "name": "min_impact",
+            "type": "dropdown",
+            "title": {
+              "en": "Minimum impact",
+              "nl": "Minimale impact",
+              "de": "Mindestauswirkung"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Any (0)",
+                  "nl": "Elke (0)",
+                  "de": "Beliebig (0)"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Low (1)",
+                  "nl": "Laag (1)",
+                  "de": "Gering (1)"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Moderate (2)",
+                  "nl": "Matig (2)",
+                  "de": "Mäßig (2)"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Significant (3)",
+                  "nl": "Aanzienlijk (3)",
+                  "de": "Erheblich (3)"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "High (4)",
+                  "nl": "Hoog (4)",
+                  "de": "Hoch (4)"
+                }
+              },
+              {
+                "id": "5",
+                "label": {
+                  "en": "Severe (5)",
+                  "nl": "Ernstig (5)",
+                  "de": "Schwerwiegend (5)"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "title",
+            "type": "string",
+            "title": {
+              "en": "Title",
+              "nl": "Titel",
+              "de": "Titel"
+            },
+            "example": "Utrecht - Amersfoort"
+          },
+          {
+            "name": "type",
+            "type": "string",
+            "title": {
+              "en": "Type",
+              "nl": "Soort",
+              "de": "Art"
+            },
+            "example": "DISRUPTION"
+          },
+          {
+            "name": "impact",
+            "type": "number",
+            "title": {
+              "en": "Impact",
+              "nl": "Impact",
+              "de": "Auswirkung"
+            },
+            "example": 3
+          },
+          {
+            "name": "cause",
+            "type": "string",
+            "title": {
+              "en": "Cause",
+              "nl": "Oorzaak",
+              "de": "Ursache"
+            },
+            "example": "Defective train"
+          },
+          {
+            "name": "situation",
+            "type": "string",
+            "title": {
+              "en": "Situation",
+              "nl": "Situatie",
+              "de": "Situation"
+            },
+            "example": "Fewer trains"
+          },
+          {
+            "name": "period",
+            "type": "string",
+            "title": {
+              "en": "Period",
+              "nl": "Periode",
+              "de": "Zeitraum"
+            },
+            "example": "until approx. 18:30"
+          },
+          {
+            "name": "affected_stations",
+            "type": "string",
+            "title": {
+              "en": "Affected stations",
+              "nl": "Betrokken stations",
+              "de": "Betroffene Bahnhöfe"
+            },
+            "example": "Utrecht Centraal, Amersfoort"
+          }
+        ]
+      },
+      {
+        "id": "shorter_train",
+        "title": {
+          "en": "Shorter train announced",
+          "nl": "Kortere trein aangekondigd",
+          "de": "Kürzerer Zug angekündigt"
+        },
+        "titleFormatted": {
+          "en": "Shorter train announced for next train on this route",
+          "nl": "Kortere trein aangekondigd voor volgende trein op dit traject",
+          "de": "Kürzerer Zug angekündigt für nächsten Zug auf dieser Strecke"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "warning",
+            "type": "string",
+            "title": {
+              "en": "Warning text",
+              "nl": "Waarschuwingstekst",
+              "de": "Warntext"
+            },
+            "example": "Trein is korter, kan drukker zijn"
+          },
+          {
+            "name": "classification",
+            "type": "string",
+            "title": {
+              "en": "Classification",
+              "nl": "Classificatie",
+              "de": "Einstufung"
+            },
+            "example": "EXTRA_BUSY"
+          }
+        ]
+      },
+      {
+        "id": "track_changed",
+        "title": {
+          "en": "Track changed",
+          "nl": "Spoor gewijzigd",
+          "de": "Gleis geändert"
+        },
+        "titleFormatted": {
+          "en": "Track changed for next departure",
+          "nl": "Spoor gewijzigd voor volgende vertrek",
+          "de": "Gleis für nächste Abfahrt geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=station"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "previous_track",
+            "type": "string",
+            "title": {
+              "en": "Previous track",
+              "nl": "Vorig spoor",
+              "de": "Vorheriges Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "new_track",
+            "type": "string",
+            "title": {
+              "en": "New track",
+              "nl": "Nieuw spoor",
+              "de": "Neues Gleis"
+            },
+            "example": "3b"
+          }
+        ]
+      },
+      {
+        "id": "trip_cancelled",
+        "title": {
+          "en": "Next train cancelled",
+          "nl": "Volgende trein uitgevallen",
+          "de": "Nächster Zug ausgefallen"
+        },
+        "titleFormatted": {
+          "en": "Next train on this route cancelled",
+          "nl": "Volgende trein op dit traject is uitgevallen",
+          "de": "Nächster Zug auf dieser Strecke ausgefallen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Planned departure",
+              "nl": "Geplande vertrek",
+              "de": "Geplante Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          }
+        ]
+      },
+      {
+        "id": "trip_departure_changed",
+        "title": {
+          "en": "Next train changed",
+          "nl": "Volgende trein gewijzigd",
+          "de": "Nächster Zug geändert"
+        },
+        "titleFormatted": {
+          "en": "Next train on this route changed",
+          "nl": "Volgende trein op dit traject is gewijzigd",
+          "de": "Nächster Zug auf dieser Strecke hat sich geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          }
+        ]
+      },
+      {
+        "id": "trip_departure_delayed",
+        "title": {
+          "en": "Next train delayed by more than",
+          "nl": "Volgende trein vertraagd met meer dan",
+          "de": "Nächster Zug verspätet um mehr als"
+        },
+        "titleFormatted": {
+          "en": "Next train delayed by more than [[minutes]] minutes",
+          "nl": "Volgende trein vertraagd met meer dan [[minutes]] minuten",
+          "de": "Nächster Zug verspätet um mehr als [[minutes]] Minuten"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          },
+          {
+            "name": "minutes",
+            "type": "number",
+            "min": 1,
+            "max": 120,
+            "step": 1,
+            "title": {
+              "en": "Minutes",
+              "nl": "Minuten",
+              "de": "Minuten"
+            },
+            "placeholder": {
+              "en": "5",
+              "nl": "5",
+              "de": "5"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 7
+          }
+        ]
+      },
+      {
+        "id": "trip_late_train_warning",
+        "title": {
+          "en": "Late train approaching",
+          "nl": "Late trein nadert",
+          "de": "Später Zug nähert sich"
+        },
+        "titleFormatted": {
+          "en": "[[which]] train of the night departs in [[minutes_before]] min",
+          "nl": "[[which]] trein van de avond vertrekt over [[minutes_before]] min",
+          "de": "[[which]] Zug des Abends fährt in [[minutes_before]] Min"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          },
+          {
+            "name": "which",
+            "type": "dropdown",
+            "title": {
+              "en": "Which train",
+              "nl": "Welke trein",
+              "de": "Welcher Zug"
+            },
+            "values": [
+              {
+                "id": "last",
+                "label": {
+                  "en": "Last train",
+                  "nl": "Laatste trein",
+                  "de": "Letzter Zug"
+                }
+              },
+              {
+                "id": "second_to_last",
+                "label": {
+                  "en": "Second-to-last train",
+                  "nl": "Een na laatste trein",
+                  "de": "Vorletzter Zug"
+                }
+              }
+            ]
+          },
+          {
+            "name": "minutes_before",
+            "type": "number",
+            "title": {
+              "en": "Minutes before departure",
+              "nl": "Minuten voor vertrek",
+              "de": "Minuten vor Abfahrt"
+            },
+            "min": 1,
+            "max": 180,
+            "step": 1,
+            "placeholder": {
+              "en": "25",
+              "nl": "25",
+              "de": "25"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "23:35"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "which",
+            "type": "string",
+            "title": {
+              "en": "Which train",
+              "nl": "Welke trein",
+              "de": "Welcher Zug"
+            },
+            "example": "second_to_last"
+          },
+          {
+            "name": "minutes_until",
+            "type": "number",
+            "title": {
+              "en": "Minutes until departure",
+              "nl": "Minuten tot vertrek",
+              "de": "Minuten bis Abfahrt"
+            },
+            "example": 25
+          },
+          {
+            "name": "summary",
+            "type": "string",
+            "title": {
+              "en": "Summary",
+              "nl": "Samenvatting",
+              "de": "Übersicht"
+            },
+            "example": "23:35 (last train tonight) — departs in 25 min"
+          }
+        ]
+      },
+      {
+        "id": "trip_track_changed",
+        "title": {
+          "en": "Track changed",
+          "nl": "Spoor gewijzigd",
+          "de": "Gleis geändert"
+        },
+        "titleFormatted": {
+          "en": "Track changed for next train on this route",
+          "nl": "Spoor gewijzigd voor volgende trein op dit traject",
+          "de": "Gleis für nächsten Zug auf dieser Strecke geändert"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "previous_track",
+            "type": "string",
+            "title": {
+              "en": "Previous track",
+              "nl": "Vorig spoor",
+              "de": "Vorheriges Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "new_track",
+            "type": "string",
+            "title": {
+              "en": "New track",
+              "nl": "Nieuw spoor",
+              "de": "Neues Gleis"
+            },
+            "example": "3b"
+          }
+        ]
+      },
+      {
+        "id": "trip_train_window_state",
+        "title": {
+          "en": "Train state changed in time window",
+          "nl": "Treinstatus gewijzigd in tijdvenster",
+          "de": "Zugstatus im Zeitfenster geändert"
+        },
+        "titleFormatted": {
+          "en": "Train between [[time_from]] and [[time_to]]: [[condition]]",
+          "nl": "Trein tussen [[time_from]] en [[time_to]]: [[condition]]",
+          "de": "Zug zwischen [[time_from]] und [[time_to]]: [[condition]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          },
+          {
+            "name": "time_from",
+            "type": "time",
+            "title": {
+              "en": "From time",
+              "nl": "Vanaf tijd",
+              "de": "Ab Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:00",
+              "nl": "08:00",
+              "de": "08:00"
+            }
+          },
+          {
+            "name": "time_to",
+            "type": "time",
+            "title": {
+              "en": "Until time",
+              "nl": "Tot tijd",
+              "de": "Bis Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:30",
+              "nl": "08:30",
+              "de": "08:30"
+            }
+          },
+          {
+            "name": "condition",
+            "type": "dropdown",
+            "title": {
+              "en": "Match on",
+              "nl": "Activeer bij",
+              "de": "Auslösen bei"
+            },
+            "values": [
+              {
+                "id": "any",
+                "label": {
+                  "en": "Any change",
+                  "nl": "Elke wijziging",
+                  "de": "Jede Änderung"
+                }
+              },
+              {
+                "id": "cancelled",
+                "label": {
+                  "en": "Became cancelled",
+                  "nl": "Werd uitgevallen",
+                  "de": "Wurde ausgefallen"
+                }
+              },
+              {
+                "id": "busy",
+                "label": {
+                  "en": "Became busy (medium+)",
+                  "nl": "Werd druk (gemiddeld+)",
+                  "de": "Wurde voll (mittel+)"
+                }
+              },
+              {
+                "id": "very_busy",
+                "label": {
+                  "en": "Became very busy (high)",
+                  "nl": "Werd extra druk (hoog)",
+                  "de": "Wurde sehr voll (hoch)"
+                }
+              },
+              {
+                "id": "shorter",
+                "label": {
+                  "en": "Shorter train announced",
+                  "nl": "Kortere trein aangekondigd",
+                  "de": "Kürzerer Zug angekündigt"
+                }
+              },
+              {
+                "id": "delayed",
+                "label": {
+                  "en": "Delay increased",
+                  "nl": "Vertraging toegenomen",
+                  "de": "Verspätung gestiegen"
+                }
+              }
+            ]
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:19"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Kropswolde"
+          },
+          {
+            "name": "event",
+            "type": "string",
+            "title": {
+              "en": "Event",
+              "nl": "Gebeurtenis",
+              "de": "Ereignis"
+            },
+            "example": "became_cancelled"
+          },
+          {
+            "name": "crowd_level",
+            "type": "string",
+            "title": {
+              "en": "Crowd level",
+              "nl": "Drukte",
+              "de": "Auslastung"
+            },
+            "example": "HIGH"
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "shorter_train",
+            "type": "boolean",
+            "title": {
+              "en": "Shorter train",
+              "nl": "Kortere trein",
+              "de": "Kürzerer Zug"
+            },
+            "example": false
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "summary",
+            "type": "string",
+            "title": {
+              "en": "Summary",
+              "nl": "Samenvatting",
+              "de": "Übersicht"
+            },
+            "example": "08:19 became cancelled"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "has_active_disruption",
+        "title": {
+          "en": "There !{{is|isn't}} an active disruption at",
+          "nl": "Er !{{is|is geen}} actieve storing bij",
+          "de": "Es !{{gibt|gibt keine}} aktive Störung bei"
+        },
+        "titleFormatted": {
+          "en": "There !{{is|isn't}} an active disruption at [[station]]",
+          "nl": "Er !{{is|is geen}} actieve storing bij [[station]]",
+          "de": "Es !{{gibt|gibt keine}} aktive Störung bei [[station]]"
+        },
+        "args": [
+          {
+            "name": "station",
+            "type": "autocomplete",
+            "title": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            },
+            "placeholder": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            }
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "next_arrival",
+        "title": {
+          "en": "Get next arrival",
+          "nl": "Haal volgende aankomst op",
+          "de": "Nächste Ankunft abrufen"
+        },
+        "titleFormatted": {
+          "en": "Next arrival at [[station]] from [[origin]]",
+          "nl": "Volgende aankomst op [[station]] uit [[origin]]",
+          "de": "Nächste Ankunft an [[station]] aus [[origin]]"
+        },
+        "args": [
+          {
+            "name": "station",
+            "type": "autocomplete",
+            "title": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            },
+            "placeholder": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            }
+          },
+          {
+            "name": "origin",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "From (optional)",
+              "nl": "Uit (optioneel)",
+              "de": "Aus (optional)"
+            },
+            "placeholder": {
+              "en": "Filter on origin, e.g. Amsterdam",
+              "nl": "Filter op herkomst, bv. Amsterdam",
+              "de": "Nach Herkunft filtern, z. B. Amsterdam"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "arrival_time",
+            "type": "string",
+            "title": {
+              "en": "Arrival",
+              "nl": "Aankomst",
+              "de": "Ankunft"
+            },
+            "example": "09:30"
+          },
+          {
+            "name": "origin",
+            "type": "string",
+            "title": {
+              "en": "Origin",
+              "nl": "Herkomst",
+              "de": "Herkunft"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "train_type",
+            "type": "string",
+            "title": {
+              "en": "Train type",
+              "nl": "Treinsoort",
+              "de": "Zugart"
+            },
+            "example": "IC"
+          }
+        ]
+      },
+      {
+        "id": "next_departure",
+        "title": {
+          "en": "Get next departure",
+          "nl": "Haal volgende vertrek op",
+          "de": "Nächste Abfahrt abrufen"
+        },
+        "titleFormatted": {
+          "en": "Next departure from [[station]] heading [[direction]]",
+          "nl": "Volgende vertrek van [[station]] richting [[direction]]",
+          "de": "Nächste Abfahrt von [[station]] Richtung [[direction]]"
+        },
+        "args": [
+          {
+            "name": "station",
+            "type": "autocomplete",
+            "title": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            },
+            "placeholder": {
+              "en": "Station",
+              "nl": "Station",
+              "de": "Bahnhof"
+            }
+          },
+          {
+            "name": "direction",
+            "type": "text",
+            "required": false,
+            "title": {
+              "en": "Direction (optional)",
+              "nl": "Richting (optioneel)",
+              "de": "Richtung (optional)"
+            },
+            "placeholder": {
+              "en": "Filter on destination, e.g. Amsterdam",
+              "nl": "Filter op bestemming, bv. Amsterdam",
+              "de": "Nach Ziel filtern, z. B. Amsterdam"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "destination",
+            "type": "string",
+            "title": {
+              "en": "Destination",
+              "nl": "Bestemming",
+              "de": "Ziel"
+            },
+            "example": "Amsterdam Centraal"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "train_type",
+            "type": "string",
+            "title": {
+              "en": "Train type",
+              "nl": "Treinsoort",
+              "de": "Zugart"
+            },
+            "example": "IC"
+          }
+        ]
+      },
+      {
+        "id": "next_trains",
+        "title": {
+          "en": "Get next two trains",
+          "nl": "Haal volgende twee treinen op",
+          "de": "Nächste zwei Züge abrufen"
+        },
+        "titleFormatted": {
+          "en": "Next two trains from [[from]] to [[to]]",
+          "nl": "Volgende twee treinen van [[from]] naar [[to]]",
+          "de": "Nächste zwei Züge von [[from]] nach [[to]]"
+        },
+        "args": [
+          {
+            "name": "from",
+            "type": "autocomplete",
+            "title": {
+              "en": "From",
+              "nl": "Van",
+              "de": "Von"
+            },
+            "placeholder": {
+              "en": "Origin station",
+              "nl": "Vertrekstation",
+              "de": "Abfahrtsbahnhof"
+            }
+          },
+          {
+            "name": "to",
+            "type": "autocomplete",
+            "title": {
+              "en": "To",
+              "nl": "Naar",
+              "de": "Nach"
+            },
+            "placeholder": {
+              "en": "Destination station",
+              "nl": "Aankomststation",
+              "de": "Zielbahnhof"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "summary",
+            "type": "string",
+            "title": {
+              "en": "Summary",
+              "nl": "Samenvatting",
+              "de": "Übersicht"
+            },
+            "example": "08:42 (track 5a) and 09:12 (+5)"
+          },
+          {
+            "name": "count",
+            "type": "number",
+            "title": {
+              "en": "Trains found",
+              "nl": "Treinen gevonden",
+              "de": "Züge gefunden"
+            },
+            "example": 2
+          },
+          {
+            "name": "first_departure_time",
+            "type": "string",
+            "title": {
+              "en": "1st departure",
+              "nl": "1e vertrek",
+              "de": "1. Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "first_arrival_time",
+            "type": "string",
+            "title": {
+              "en": "1st arrival",
+              "nl": "1e aankomst",
+              "de": "1. Ankunft"
+            },
+            "example": "09:30"
+          },
+          {
+            "name": "first_track",
+            "type": "string",
+            "title": {
+              "en": "1st track",
+              "nl": "1e spoor",
+              "de": "1. Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "first_delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "1st delay (min)",
+              "nl": "1e vertraging (min)",
+              "de": "1. Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "first_transfers",
+            "type": "number",
+            "title": {
+              "en": "1st transfers",
+              "nl": "1e overstappen",
+              "de": "1. Umstiege"
+            },
+            "example": 1
+          },
+          {
+            "name": "first_cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "1st cancelled",
+              "nl": "1e uitgevallen",
+              "de": "1. ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "first_disruption",
+            "type": "boolean",
+            "title": {
+              "en": "1st has disruption",
+              "nl": "1e heeft storing",
+              "de": "1. mit Störung"
+            },
+            "example": false
+          },
+          {
+            "name": "second_departure_time",
+            "type": "string",
+            "title": {
+              "en": "2nd departure",
+              "nl": "2e vertrek",
+              "de": "2. Abfahrt"
+            },
+            "example": "09:12"
+          },
+          {
+            "name": "second_arrival_time",
+            "type": "string",
+            "title": {
+              "en": "2nd arrival",
+              "nl": "2e aankomst",
+              "de": "2. Ankunft"
+            },
+            "example": "10:00"
+          },
+          {
+            "name": "second_track",
+            "type": "string",
+            "title": {
+              "en": "2nd track",
+              "nl": "2e spoor",
+              "de": "2. Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "second_delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "2nd delay (min)",
+              "nl": "2e vertraging (min)",
+              "de": "2. Verspätung (Min)"
+            },
+            "example": 5
+          },
+          {
+            "name": "second_transfers",
+            "type": "number",
+            "title": {
+              "en": "2nd transfers",
+              "nl": "2e overstappen",
+              "de": "2. Umstiege"
+            },
+            "example": 1
+          },
+          {
+            "name": "second_cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "2nd cancelled",
+              "nl": "2e uitgevallen",
+              "de": "2. ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "second_disruption",
+            "type": "boolean",
+            "title": {
+              "en": "2nd has disruption",
+              "nl": "2e heeft storing",
+              "de": "2. mit Störung"
+            },
+            "example": false
+          },
+          {
+            "name": "first_price_eur",
+            "type": "number",
+            "title": {
+              "en": "1st price (€)",
+              "nl": "1e prijs (€)",
+              "de": "1. Preis (€)"
+            },
+            "example": 12.5
+          },
+          {
+            "name": "first_co2_kg",
+            "type": "number",
+            "title": {
+              "en": "1st CO2 (kg)",
+              "nl": "1e CO2 (kg)",
+              "de": "1. CO2 (kg)"
+            },
+            "example": 0.8
+          },
+          {
+            "name": "first_crowd_level",
+            "type": "string",
+            "title": {
+              "en": "1st crowd",
+              "nl": "1e drukte",
+              "de": "1. Auslastung"
+            },
+            "example": "MEDIUM"
+          },
+          {
+            "name": "second_price_eur",
+            "type": "number",
+            "title": {
+              "en": "2nd price (€)",
+              "nl": "2e prijs (€)",
+              "de": "2. Preis (€)"
+            },
+            "example": 12.5
+          },
+          {
+            "name": "second_co2_kg",
+            "type": "number",
+            "title": {
+              "en": "2nd CO2 (kg)",
+              "nl": "2e CO2 (kg)",
+              "de": "2. CO2 (kg)"
+            },
+            "example": 0.8
+          },
+          {
+            "name": "second_crowd_level",
+            "type": "string",
+            "title": {
+              "en": "2nd crowd",
+              "nl": "2e drukte",
+              "de": "2. Auslastung"
+            },
+            "example": "LOW"
+          },
+          {
+            "name": "booking_url",
+            "type": "string",
+            "title": {
+              "en": "Booking URL",
+              "nl": "Boekings-URL",
+              "de": "Buchungs-URL"
+            },
+            "example": "https://www.ns.nl/..."
+          }
+        ]
+      },
+      {
+        "id": "plan_trip",
+        "title": {
+          "en": "Plan a trip",
+          "nl": "Plan een reis",
+          "de": "Reise planen"
+        },
+        "titleFormatted": {
+          "en": "Plan trip from [[from]] to [[to]]",
+          "nl": "Plan reis van [[from]] naar [[to]]",
+          "de": "Reise planen von [[from]] nach [[to]]"
+        },
+        "args": [
+          {
+            "name": "from",
+            "type": "autocomplete",
+            "title": {
+              "en": "From",
+              "nl": "Van",
+              "de": "Von"
+            },
+            "placeholder": {
+              "en": "Origin station",
+              "nl": "Vertrekstation",
+              "de": "Abfahrtsbahnhof"
+            }
+          },
+          {
+            "name": "to",
+            "type": "autocomplete",
+            "title": {
+              "en": "To",
+              "nl": "Naar",
+              "de": "Nach"
+            },
+            "placeholder": {
+              "en": "Destination station",
+              "nl": "Aankomststation",
+              "de": "Zielbahnhof"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:42"
+          },
+          {
+            "name": "arrival_time",
+            "type": "string",
+            "title": {
+              "en": "Arrival",
+              "nl": "Aankomst",
+              "de": "Ankunft"
+            },
+            "example": "09:30"
+          },
+          {
+            "name": "duration_minutes",
+            "type": "number",
+            "title": {
+              "en": "Duration (min)",
+              "nl": "Reistijd (min)",
+              "de": "Dauer (Min)"
+            },
+            "example": 48
+          },
+          {
+            "name": "transfers",
+            "type": "number",
+            "title": {
+              "en": "Transfers",
+              "nl": "Overstappen",
+              "de": "Umstiege"
+            },
+            "example": 1
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 0
+          },
+          {
+            "name": "departure_track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "price_eur",
+            "type": "number",
+            "title": {
+              "en": "Price (€, 2nd class single)",
+              "nl": "Prijs (€, 2e klas enkel)",
+              "de": "Preis (€, 2. Klasse einfach)"
+            },
+            "example": 12.5
+          },
+          {
+            "name": "co2_kg",
+            "type": "number",
+            "title": {
+              "en": "CO2 (kg)",
+              "nl": "CO2 (kg)",
+              "de": "CO2 (kg)"
+            },
+            "example": 0.8
+          },
+          {
+            "name": "crowd_level",
+            "type": "string",
+            "title": {
+              "en": "Crowd level",
+              "nl": "Drukte",
+              "de": "Auslastung"
+            },
+            "example": "MEDIUM"
+          },
+          {
+            "name": "booking_url",
+            "type": "string",
+            "title": {
+              "en": "Booking URL",
+              "nl": "Boekings-URL",
+              "de": "Buchungs-URL"
+            },
+            "example": "https://www.ns.nl/..."
+          }
+        ]
+      },
+      {
+        "id": "train_in_window",
+        "title": {
+          "en": "Get train in time window",
+          "nl": "Haal trein op in tijdvenster",
+          "de": "Zug im Zeitfenster abrufen"
+        },
+        "titleFormatted": {
+          "en": "Train from [[from]] to [[to]] departing between [[time_from]] and [[time_to]]",
+          "nl": "Trein van [[from]] naar [[to]] tussen [[time_from]] en [[time_to]]",
+          "de": "Zug von [[from]] nach [[to]] zwischen [[time_from]] und [[time_to]]"
+        },
+        "args": [
+          {
+            "name": "from",
+            "type": "autocomplete",
+            "title": {
+              "en": "From",
+              "nl": "Van",
+              "de": "Von"
+            },
+            "placeholder": {
+              "en": "Origin station",
+              "nl": "Vertrekstation",
+              "de": "Abfahrtsbahnhof"
+            }
+          },
+          {
+            "name": "to",
+            "type": "autocomplete",
+            "title": {
+              "en": "To",
+              "nl": "Naar",
+              "de": "Nach"
+            },
+            "placeholder": {
+              "en": "Destination station",
+              "nl": "Aankomststation",
+              "de": "Zielbahnhof"
+            }
+          },
+          {
+            "name": "time_from",
+            "type": "time",
+            "title": {
+              "en": "From time",
+              "nl": "Vanaf tijd",
+              "de": "Ab Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:00",
+              "nl": "08:00",
+              "de": "08:00"
+            }
+          },
+          {
+            "name": "time_to",
+            "type": "time",
+            "title": {
+              "en": "Until time",
+              "nl": "Tot tijd",
+              "de": "Bis Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:30",
+              "nl": "08:30",
+              "de": "08:30"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "found",
+            "type": "boolean",
+            "title": {
+              "en": "Train found",
+              "nl": "Trein gevonden",
+              "de": "Zug gefunden"
+            },
+            "example": true
+          },
+          {
+            "name": "summary",
+            "type": "string",
+            "title": {
+              "en": "Summary",
+              "nl": "Samenvatting",
+              "de": "Übersicht"
+            },
+            "example": "08:12 (track 5a, +5 min)"
+          },
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:12"
+          },
+          {
+            "name": "arrival_time",
+            "type": "string",
+            "title": {
+              "en": "Arrival",
+              "nl": "Aankomst",
+              "de": "Ankunft"
+            },
+            "example": "09:00"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 5
+          },
+          {
+            "name": "transfers",
+            "type": "number",
+            "title": {
+              "en": "Transfers",
+              "nl": "Overstappen",
+              "de": "Umstiege"
+            },
+            "example": 1
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "crowd_level",
+            "type": "string",
+            "title": {
+              "en": "Crowd level",
+              "nl": "Drukte",
+              "de": "Auslastung"
+            },
+            "example": "HIGH"
+          },
+          {
+            "name": "shorter_train",
+            "type": "boolean",
+            "title": {
+              "en": "Shorter train",
+              "nl": "Kortere trein",
+              "de": "Kürzerer Zug"
+            },
+            "example": false
+          },
+          {
+            "name": "disruption",
+            "type": "boolean",
+            "title": {
+              "en": "Has disruption",
+              "nl": "Heeft storing",
+              "de": "Mit Störung"
+            },
+            "example": false
+          },
+          {
+            "name": "price_eur",
+            "type": "number",
+            "title": {
+              "en": "Price (€)",
+              "nl": "Prijs (€)",
+              "de": "Preis (€)"
+            },
+            "example": 12.5
+          },
+          {
+            "name": "co2_kg",
+            "type": "number",
+            "title": {
+              "en": "CO2 (kg)",
+              "nl": "CO2 (kg)",
+              "de": "CO2 (kg)"
+            },
+            "example": 0.8
+          },
+          {
+            "name": "train_type",
+            "type": "string",
+            "title": {
+              "en": "Train type",
+              "nl": "Treinsoort",
+              "de": "Zugart"
+            },
+            "example": "IC"
+          }
+        ]
+      },
+      {
+        "id": "trip_train_in_window",
+        "title": {
+          "en": "Get train in time window (this route)",
+          "nl": "Haal trein op in tijdvenster (dit traject)",
+          "de": "Zug im Zeitfenster abrufen (diese Strecke)"
+        },
+        "titleFormatted": {
+          "en": "Train on this route between [[time_from]] and [[time_to]]",
+          "nl": "Trein op dit traject tussen [[time_from]] en [[time_to]]",
+          "de": "Zug auf dieser Strecke zwischen [[time_from]] und [[time_to]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=trip"
+          },
+          {
+            "name": "time_from",
+            "type": "time",
+            "title": {
+              "en": "From time",
+              "nl": "Vanaf tijd",
+              "de": "Ab Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:00",
+              "nl": "08:00",
+              "de": "08:00"
+            }
+          },
+          {
+            "name": "time_to",
+            "type": "time",
+            "title": {
+              "en": "Until time",
+              "nl": "Tot tijd",
+              "de": "Bis Uhrzeit"
+            },
+            "placeholder": {
+              "en": "08:30",
+              "nl": "08:30",
+              "de": "08:30"
+            }
+          }
+        ],
+        "tokens": [
+          {
+            "name": "found",
+            "type": "boolean",
+            "title": {
+              "en": "Train found",
+              "nl": "Trein gevonden",
+              "de": "Zug gefunden"
+            },
+            "example": true
+          },
+          {
+            "name": "summary",
+            "type": "string",
+            "title": {
+              "en": "Summary",
+              "nl": "Samenvatting",
+              "de": "Übersicht"
+            },
+            "example": "08:12 (track 5a, +5 min)"
+          },
+          {
+            "name": "departure_time",
+            "type": "string",
+            "title": {
+              "en": "Departure",
+              "nl": "Vertrek",
+              "de": "Abfahrt"
+            },
+            "example": "08:12"
+          },
+          {
+            "name": "arrival_time",
+            "type": "string",
+            "title": {
+              "en": "Arrival",
+              "nl": "Aankomst",
+              "de": "Ankunft"
+            },
+            "example": "09:00"
+          },
+          {
+            "name": "track",
+            "type": "string",
+            "title": {
+              "en": "Track",
+              "nl": "Spoor",
+              "de": "Gleis"
+            },
+            "example": "5a"
+          },
+          {
+            "name": "delay_minutes",
+            "type": "number",
+            "title": {
+              "en": "Delay (min)",
+              "nl": "Vertraging (min)",
+              "de": "Verspätung (Min)"
+            },
+            "example": 5
+          },
+          {
+            "name": "transfers",
+            "type": "number",
+            "title": {
+              "en": "Transfers",
+              "nl": "Overstappen",
+              "de": "Umstiege"
+            },
+            "example": 1
+          },
+          {
+            "name": "cancelled",
+            "type": "boolean",
+            "title": {
+              "en": "Cancelled",
+              "nl": "Uitgevallen",
+              "de": "Ausgefallen"
+            },
+            "example": false
+          },
+          {
+            "name": "crowd_level",
+            "type": "string",
+            "title": {
+              "en": "Crowd level",
+              "nl": "Drukte",
+              "de": "Auslastung"
+            },
+            "example": "HIGH"
+          },
+          {
+            "name": "shorter_train",
+            "type": "boolean",
+            "title": {
+              "en": "Shorter train",
+              "nl": "Kortere trein",
+              "de": "Kürzerer Zug"
+            },
+            "example": false
+          },
+          {
+            "name": "disruption",
+            "type": "boolean",
+            "title": {
+              "en": "Has disruption",
+              "nl": "Heeft storing",
+              "de": "Mit Störung"
+            },
+            "example": false
+          },
+          {
+            "name": "price_eur",
+            "type": "number",
+            "title": {
+              "en": "Price (€)",
+              "nl": "Prijs (€)",
+              "de": "Preis (€)"
+            },
+            "example": 12.5
+          },
+          {
+            "name": "co2_kg",
+            "type": "number",
+            "title": {
+              "en": "CO2 (kg)",
+              "nl": "CO2 (kg)",
+              "de": "CO2 (kg)"
+            },
+            "example": 0.8
+          }
+        ]
+      }
+    ]
+  },
+  "drivers": [
+    {
+      "name": {
+        "en": "Station",
+        "nl": "Station",
+        "de": "Bahnhof"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "next_departure_time",
+        "next_departure_destination",
+        "next_departure_track",
+        "next_departure_delay",
+        "alarm_disruption",
+        "alarm_cancelled",
+        "cancelled_value",
+        "track_value"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "images": {
+        "large": "/drivers/station/assets/images/large.png",
+        "small": "/drivers/station/assets/images/small.png"
+      },
+      "pair": [
+        {
+          "id": "select_station",
+          "navigation": {
+            "next": "add_my_device"
+          }
+        },
+        {
+          "id": "add_my_device"
+        }
+      ],
+      "settings": [
+        {
+          "id": "direction_filter",
+          "type": "text",
+          "label": {
+            "en": "Direction filter (optional)",
+            "nl": "Richtingfilter (optioneel)",
+            "de": "Richtungsfilter (optional)"
+          },
+          "value": "",
+          "hint": {
+            "en": "Only show departures whose destination contains this text. Leave empty for all departures.",
+            "nl": "Toon alleen vertrekken waarvan de bestemming deze tekst bevat. Leeg laten voor alle vertrekken.",
+            "de": "Nur Abfahrten anzeigen, deren Ziel diesen Text enthält. Leer lassen für alle Abfahrten."
+          }
+        },
+        {
+          "id": "poll_interval_seconds",
+          "type": "number",
+          "label": {
+            "en": "Refresh interval (seconds)",
+            "nl": "Verversingsinterval (seconden)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "hint": {
+            "en": "How often to ask the NS API for new departures and disruptions. Each refresh makes two API calls (departures + disruptions). Lower values use more of your NS API quota; the minimum of 60 seconds keeps you safely within the rate limits, also when you run multiple Station or Trip devices.",
+            "nl": "Hoe vaak de NS API om nieuwe vertrektijden en storingen wordt gevraagd. Elke verversing doet twee API-aanroepen (vertrekken + storingen). Een lagere waarde verbruikt meer van je NS API quotum; het minimum van 60 seconden houdt je veilig binnen de rate limits, ook als je meerdere Station- of Trajectapparaten hebt.",
+            "de": "Wie oft die NS-API nach neuen Abfahrten und Störungen gefragt wird. Jede Aktualisierung macht zwei API-Aufrufe (Abfahrten + Störungen). Niedrigere Werte verbrauchen mehr von deinem NS-API-Kontingent; das Minimum von 60 Sekunden hält dich sicher innerhalb der Rate Limits, auch wenn du mehrere Bahnhof- oder Verbindungsgeräte verwendest."
+          },
+          "value": 60,
+          "min": 60,
+          "max": 600
+        }
+      ],
+      "id": "station"
+    },
+    {
+      "name": {
+        "en": "Trip",
+        "nl": "Traject",
+        "de": "Verbindung"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "next_departure_time",
+        "next_departure_track",
+        "next_departure_delay",
+        "alarm_disruption",
+        "alarm_cancelled",
+        "alarm_shorter_train",
+        "crowd_level",
+        "crowd_level_value",
+        "cancelled_value",
+        "track_value"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "images": {
+        "large": "/drivers/trip/assets/images/large.png",
+        "small": "/drivers/trip/assets/images/small.png"
+      },
+      "pair": [
+        {
+          "id": "select_route",
+          "navigation": {
+            "next": "add_my_device"
+          }
+        },
+        {
+          "id": "add_my_device"
+        }
+      ],
+      "settings": [
+        {
+          "id": "poll_interval_seconds",
+          "type": "number",
+          "label": {
+            "en": "Refresh interval (seconds)",
+            "nl": "Verversingsinterval (seconden)",
+            "de": "Aktualisierungsintervall (Sekunden)"
+          },
+          "hint": {
+            "en": "How often to ask the NS API for new trip information. Lower values use more of your NS API quota; the minimum of 120 seconds keeps you safely within the rate limits, also when you run multiple Trip or Station devices.",
+            "nl": "Hoe vaak de NS API om nieuwe reisinformatie wordt gevraagd. Een lagere waarde verbruikt meer van je NS API quotum; het minimum van 120 seconden houdt je veilig binnen de rate limits, ook als je meerdere Traject- of Stationapparaten hebt.",
+            "de": "Wie oft die NS-API nach neuen Reiseinformationen gefragt wird. Niedrigere Werte verbrauchen mehr von deinem NS-API-Kontingent; das Minimum von 120 Sekunden hält dich sicher innerhalb der Rate Limits, auch wenn du mehrere Verbindungs- oder Bahnhof-Geräte verwendest."
+          },
+          "value": 120,
+          "min": 120,
+          "max": 600
+        }
+      ],
+      "id": "trip"
+    }
+  ],
+  "capabilities": {
+    "alarm_cancelled": {
+      "type": "boolean",
+      "title": {
+        "en": "Cancelled",
+        "nl": "Uitgevallen",
+        "de": "Ausgefallen"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/cancelled.svg",
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "alarm_disruption": {
+      "type": "boolean",
+      "title": {
+        "en": "Disruption",
+        "nl": "Storing",
+        "de": "Störung"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/disruption.svg",
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "alarm_shorter_train": {
+      "type": "boolean",
+      "title": {
+        "en": "Shorter train",
+        "nl": "Kortere trein",
+        "de": "Kürzerer Zug"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/shorter.svg",
+      "getable": true,
+      "setable": false,
+      "insights": true
+    },
+    "cancelled_value": {
+      "type": "number",
+      "title": {
+        "en": "Cancelled (value)",
+        "nl": "Uitgevallen (waarde)",
+        "de": "Ausgefallen (Wert)"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "max": 1
+    },
+    "crowd_level": {
+      "type": "enum",
+      "title": {
+        "en": "Crowd level",
+        "nl": "Drukte",
+        "de": "Auslastung"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/crowd.svg",
+      "getable": true,
+      "setable": false,
+      "values": [
+        {
+          "id": "unknown",
+          "title": {
+            "en": "Unknown",
+            "nl": "Onbekend",
+            "de": "Unbekannt"
+          }
+        },
+        {
+          "id": "low",
+          "title": {
+            "en": "Low",
+            "nl": "Rustig",
+            "de": "Niedrig"
+          }
+        },
+        {
+          "id": "medium",
+          "title": {
+            "en": "Medium",
+            "nl": "Gemiddeld",
+            "de": "Mittel"
+          }
+        },
+        {
+          "id": "high",
+          "title": {
+            "en": "High",
+            "nl": "Druk",
+            "de": "Hoch"
+          }
+        }
+      ]
+    },
+    "crowd_level_value": {
+      "type": "number",
+      "title": {
+        "en": "Crowd level (value)",
+        "nl": "Drukte (waarde)",
+        "de": "Auslastung (Wert)"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "min": 0,
+      "max": 3
+    },
+    "next_departure_delay": {
+      "type": "number",
+      "title": {
+        "en": "Delay",
+        "nl": "Vertraging",
+        "de": "Verspätung"
+      },
+      "units": {
+        "en": "min",
+        "nl": "min",
+        "de": "Min"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/delay.svg",
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "min": 0
+    },
+    "next_departure_destination": {
+      "type": "string",
+      "title": {
+        "en": "Next destination",
+        "nl": "Volgende bestemming",
+        "de": "Nächstes Ziel"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/destination.svg",
+      "getable": true,
+      "setable": false
+    },
+    "next_departure_time": {
+      "type": "string",
+      "title": {
+        "en": "Next departure",
+        "nl": "Volgende vertrek",
+        "de": "Nächste Abfahrt"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/clock.svg",
+      "getable": true,
+      "setable": false
+    },
+    "next_departure_track": {
+      "type": "string",
+      "title": {
+        "en": "Track",
+        "nl": "Spoor",
+        "de": "Gleis"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/track.svg",
+      "getable": true,
+      "setable": false
+    },
+    "track_value": {
+      "type": "number",
+      "title": {
+        "en": "Track (value)",
+        "nl": "Spoor (waarde)",
+        "de": "Gleis (Wert)"
+      },
+      "uiComponent": null,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "min": 0
+    }
+  }
+}

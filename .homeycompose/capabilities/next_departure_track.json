@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Track",
+    "nl": "Spoor",
+    "de": "Gleis"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/track.svg",
+  "getable": true,
+  "setable": false
+}

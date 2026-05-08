@@ -1,0 +1,37 @@
+{
+  "id": "next_arrival",
+  "title": {
+    "en": "Get next arrival",
+    "nl": "Haal volgende aankomst op",
+    "de": "Nächste Ankunft abrufen"
+  },
+  "titleFormatted": {
+    "en": "Next arrival at [[station]] from [[origin]]",
+    "nl": "Volgende aankomst op [[station]] uit [[origin]]",
+    "de": "Nächste Ankunft an [[station]] aus [[origin]]"
+  },
+  "args": [
+    { "name": "station", "type": "autocomplete",
+      "title": { "en": "Station", "nl": "Station", "de": "Bahnhof" },
+      "placeholder": { "en": "Station", "nl": "Station", "de": "Bahnhof" } },
+    { "name": "origin", "type": "text", "required": false,
+      "title": { "en": "From (optional)", "nl": "Uit (optioneel)", "de": "Aus (optional)" },
+      "placeholder": { "en": "Filter on origin, e.g. Amsterdam",
+                       "nl": "Filter op herkomst, bv. Amsterdam",
+                       "de": "Nach Herkunft filtern, z. B. Amsterdam" } }
+  ],
+  "tokens": [
+    { "name": "arrival_time", "type": "string",
+      "title": { "en": "Arrival", "nl": "Aankomst", "de": "Ankunft" }, "example": "09:30" },
+    { "name": "origin", "type": "string",
+      "title": { "en": "Origin", "nl": "Herkomst", "de": "Herkunft" }, "example": "Amsterdam Centraal" },
+    { "name": "track", "type": "string",
+      "title": { "en": "Track", "nl": "Spoor", "de": "Gleis" }, "example": "5a" },
+    { "name": "delay_minutes", "type": "number",
+      "title": { "en": "Delay (min)", "nl": "Vertraging (min)", "de": "Verspätung (Min)" }, "example": 0 },
+    { "name": "cancelled", "type": "boolean",
+      "title": { "en": "Cancelled", "nl": "Uitgevallen", "de": "Ausgefallen" }, "example": false },
+    { "name": "train_type", "type": "string",
+      "title": { "en": "Train type", "nl": "Treinsoort", "de": "Zugart" }, "example": "IC" }
+  ]
+}

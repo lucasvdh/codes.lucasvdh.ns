@@ -1,0 +1,13 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Cancelled",
+    "nl": "Uitgevallen",
+    "de": "Ausgefallen"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/cancelled.svg",
+  "getable": true,
+  "setable": false,
+  "insights": true
+}

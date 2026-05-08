@@ -1,0 +1,14 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Track (value)",
+    "nl": "Spoor (waarde)",
+    "de": "Gleis (Wert)"
+  },
+  "uiComponent": null,
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "min": 0
+}

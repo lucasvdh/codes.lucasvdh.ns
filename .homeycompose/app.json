@@ -1,0 +1,42 @@
+{
+  "id": "codes.lucasvdh.ns",
+  "version": "0.1.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "brandColor": "#003082",
+  "name": {
+    "en": "NS",
+    "nl": "NS",
+    "de": "NS"
+  },
+  "description": {
+    "en": "Dutch Railways (NS) departures, trip planning and disruptions",
+    "nl": "Vertrektijden, reisadvies en storingen van de NS",
+    "de": "Abfahrtszeiten, Reiseauskunft und Störungen der niederländischen Bahn (NS)"
+  },
+  "category": "tools",
+  "platforms": ["local", "cloud"],
+  "tags": {
+    "en": ["NS", "trains", "Dutch Railways", "departures", "disruptions"],
+    "nl": ["NS", "trein", "vertrektijden", "storingen", "reisadvies"],
+    "de": ["NS", "Zug", "Abfahrtszeiten", "Störungen", "Reiseauskunft"]
+  },
+  "images": {
+    "xlarge": "./assets/images/xlarge.png",
+    "large": "./assets/images/large.png",
+    "small": "./assets/images/small.png"
+  },
+  "author": {
+    "name": "Lucas van der Have",
+    "email": "lucasvdhave@gmail.com"
+  },
+  "contributors": {
+    "developers": [
+      { "name": "Lucas van der Have", "email": "lucasvdhave@gmail.com" }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/lucasvdh/codes.lucasvdh.ns/issues"
+  },
+  "source": "https://github.com/lucasvdh/codes.lucasvdh.ns"
+}

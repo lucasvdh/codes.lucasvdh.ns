@@ -1,0 +1,30 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Crowd level",
+    "nl": "Drukte",
+    "de": "Auslastung"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/crowd.svg",
+  "getable": true,
+  "setable": false,
+  "values": [
+    {
+      "id": "unknown",
+      "title": { "en": "Unknown", "nl": "Onbekend", "de": "Unbekannt" }
+    },
+    {
+      "id": "low",
+      "title": { "en": "Low", "nl": "Rustig", "de": "Niedrig" }
+    },
+    {
+      "id": "medium",
+      "title": { "en": "Medium", "nl": "Gemiddeld", "de": "Mittel" }
+    },
+    {
+      "id": "high",
+      "title": { "en": "High", "nl": "Druk", "de": "Hoch" }
+    }
+  ]
+}

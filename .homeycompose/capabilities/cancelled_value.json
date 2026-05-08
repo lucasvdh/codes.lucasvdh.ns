@@ -1,0 +1,15 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Cancelled (value)",
+    "nl": "Uitgevallen (waarde)",
+    "de": "Ausgefallen (Wert)"
+  },
+  "uiComponent": null,
+  "getable": true,
+  "setable": false,
+  "insights": true,
+  "decimals": 0,
+  "min": 0,
+  "max": 1
+}

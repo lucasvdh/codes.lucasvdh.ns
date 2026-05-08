@@ -1,0 +1,18 @@
+<script type="application/javascript">
+  Homey.setTitle(Homey.__('pair.adding_route'));
+  Homey.showLoadingOverlay();
+
+  Homey.emit('getDevice', null)
+    .then(function (device) {
+      return Homey.createDevice(device);
+    })
+    .then(function () {
+      Homey.done();
+    })
+    .catch(function (error) {
+      const msg = (error && error.message) || String(error);
+      Homey.alert(msg).then(function () {
+        Homey.showView('select_route');
+      });
+    });
+</script>

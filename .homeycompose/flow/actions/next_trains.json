@@ -1,0 +1,73 @@
+{
+  "id": "next_trains",
+  "title": {
+    "en": "Get next two trains",
+    "nl": "Haal volgende twee treinen op",
+    "de": "Nächste zwei Züge abrufen"
+  },
+  "titleFormatted": {
+    "en": "Next two trains from [[from]] to [[to]]",
+    "nl": "Volgende twee treinen van [[from]] naar [[to]]",
+    "de": "Nächste zwei Züge von [[from]] nach [[to]]"
+  },
+  "args": [
+    { "name": "from", "type": "autocomplete",
+      "title": { "en": "From", "nl": "Van", "de": "Von" },
+      "placeholder": { "en": "Origin station", "nl": "Vertrekstation", "de": "Abfahrtsbahnhof" } },
+    { "name": "to", "type": "autocomplete",
+      "title": { "en": "To", "nl": "Naar", "de": "Nach" },
+      "placeholder": { "en": "Destination station", "nl": "Aankomststation", "de": "Zielbahnhof" } }
+  ],
+  "tokens": [
+    { "name": "summary", "type": "string",
+      "title": { "en": "Summary", "nl": "Samenvatting", "de": "Übersicht" },
+      "example": "08:42 (track 5a) and 09:12 (+5)" },
+    { "name": "count", "type": "number",
+      "title": { "en": "Trains found", "nl": "Treinen gevonden", "de": "Züge gefunden" }, "example": 2 },
+
+    { "name": "first_departure_time", "type": "string",
+      "title": { "en": "1st departure", "nl": "1e vertrek", "de": "1. Abfahrt" }, "example": "08:42" },
+    { "name": "first_arrival_time", "type": "string",
+      "title": { "en": "1st arrival", "nl": "1e aankomst", "de": "1. Ankunft" }, "example": "09:30" },
+    { "name": "first_track", "type": "string",
+      "title": { "en": "1st track", "nl": "1e spoor", "de": "1. Gleis" }, "example": "5a" },
+    { "name": "first_delay_minutes", "type": "number",
+      "title": { "en": "1st delay (min)", "nl": "1e vertraging (min)", "de": "1. Verspätung (Min)" }, "example": 0 },
+    { "name": "first_transfers", "type": "number",
+      "title": { "en": "1st transfers", "nl": "1e overstappen", "de": "1. Umstiege" }, "example": 1 },
+    { "name": "first_cancelled", "type": "boolean",
+      "title": { "en": "1st cancelled", "nl": "1e uitgevallen", "de": "1. ausgefallen" }, "example": false },
+    { "name": "first_disruption", "type": "boolean",
+      "title": { "en": "1st has disruption", "nl": "1e heeft storing", "de": "1. mit Störung" }, "example": false },
+
+    { "name": "second_departure_time", "type": "string",
+      "title": { "en": "2nd departure", "nl": "2e vertrek", "de": "2. Abfahrt" }, "example": "09:12" },
+    { "name": "second_arrival_time", "type": "string",
+      "title": { "en": "2nd arrival", "nl": "2e aankomst", "de": "2. Ankunft" }, "example": "10:00" },
+    { "name": "second_track", "type": "string",
+      "title": { "en": "2nd track", "nl": "2e spoor", "de": "2. Gleis" }, "example": "5a" },
+    { "name": "second_delay_minutes", "type": "number",
+      "title": { "en": "2nd delay (min)", "nl": "2e vertraging (min)", "de": "2. Verspätung (Min)" }, "example": 5 },
+    { "name": "second_transfers", "type": "number",
+      "title": { "en": "2nd transfers", "nl": "2e overstappen", "de": "2. Umstiege" }, "example": 1 },
+    { "name": "second_cancelled", "type": "boolean",
+      "title": { "en": "2nd cancelled", "nl": "2e uitgevallen", "de": "2. ausgefallen" }, "example": false },
+    { "name": "second_disruption", "type": "boolean",
+      "title": { "en": "2nd has disruption", "nl": "2e heeft storing", "de": "2. mit Störung" }, "example": false },
+
+    { "name": "first_price_eur", "type": "number",
+      "title": { "en": "1st price (€)", "nl": "1e prijs (€)", "de": "1. Preis (€)" }, "example": 12.5 },
+    { "name": "first_co2_kg", "type": "number",
+      "title": { "en": "1st CO2 (kg)", "nl": "1e CO2 (kg)", "de": "1. CO2 (kg)" }, "example": 0.8 },
+    { "name": "first_crowd_level", "type": "string",
+      "title": { "en": "1st crowd", "nl": "1e drukte", "de": "1. Auslastung" }, "example": "MEDIUM" },
+    { "name": "second_price_eur", "type": "number",
+      "title": { "en": "2nd price (€)", "nl": "2e prijs (€)", "de": "2. Preis (€)" }, "example": 12.5 },
+    { "name": "second_co2_kg", "type": "number",
+      "title": { "en": "2nd CO2 (kg)", "nl": "2e CO2 (kg)", "de": "2. CO2 (kg)" }, "example": 0.8 },
+    { "name": "second_crowd_level", "type": "string",
+      "title": { "en": "2nd crowd", "nl": "2e drukte", "de": "2. Auslastung" }, "example": "LOW" },
+    { "name": "booking_url", "type": "string",
+      "title": { "en": "Booking URL", "nl": "Boekings-URL", "de": "Buchungs-URL" }, "example": "https://www.ns.nl/..." }
+  ]
+}

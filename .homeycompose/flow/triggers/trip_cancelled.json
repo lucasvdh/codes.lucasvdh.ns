@@ -1,0 +1,22 @@
+{
+  "id": "trip_cancelled",
+  "title": {
+    "en": "Next train cancelled",
+    "nl": "Volgende trein uitgevallen",
+    "de": "Nächster Zug ausgefallen"
+  },
+  "titleFormatted": {
+    "en": "Next train on this route cancelled",
+    "nl": "Volgende trein op dit traject is uitgevallen",
+    "de": "Nächster Zug auf dieser Strecke ausgefallen"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=trip" }
+  ],
+  "tokens": [
+    { "name": "departure_time", "type": "string",
+      "title": { "en": "Planned departure", "nl": "Geplande vertrek", "de": "Geplante Abfahrt" }, "example": "08:42" },
+    { "name": "destination", "type": "string",
+      "title": { "en": "Destination", "nl": "Bestemming", "de": "Ziel" }, "example": "Kropswolde" }
+  ]
+}

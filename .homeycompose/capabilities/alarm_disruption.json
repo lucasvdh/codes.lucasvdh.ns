@@ -1,0 +1,13 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Disruption",
+    "nl": "Storing",
+    "de": "Störung"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/disruption.svg",
+  "getable": true,
+  "setable": false,
+  "insights": true
+}

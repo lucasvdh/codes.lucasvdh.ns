@@ -1,0 +1,13 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Shorter train",
+    "nl": "Kortere trein",
+    "de": "Kürzerer Zug"
+  },
+  "uiComponent": "sensor",
+  "icon": "/assets/capabilities/shorter.svg",
+  "getable": true,
+  "setable": false,
+  "insights": true
+}

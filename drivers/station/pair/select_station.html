@@ -1,0 +1,116 @@
+<div class="form-wrapper">
+  <p class="hint" data-i18n="pair.station_intro"></p>
+
+  <fieldset class="homey-form-fieldset">
+    <div class="homey-form-group">
+      <label class="homey-form-label" data-i18n="pair.station_label"></label>
+      <input class="homey-form-input" id="stationInput" type="text" autocomplete="off" />
+      <div id="stationResults" class="results"></div>
+      <div id="stationSelected" class="selected"></div>
+    </div>
+  </fieldset>
+
+  <p id="status" class="status"></p>
+  <p id="err" class="alert hidden"></p>
+</div>
+
+<script type="application/javascript">
+  let pickedStation = null;
+
+  Homey.setTitle(Homey.__('pair.station_title'));
+
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    el.textContent = Homey.__(el.getAttribute('data-i18n'));
+  });
+  document.getElementById('stationInput').placeholder = Homey.__('pair.type_min_chars');
+
+  function showError(msg) {
+    const err = document.getElementById('err');
+    if (msg && msg.message) msg = msg.message;
+    if (typeof msg !== 'string') msg = Homey.__('pair.error_generic');
+    err.textContent = msg;
+    err.classList.remove('hidden');
+  }
+
+  function clearError() {
+    document.getElementById('err').classList.add('hidden');
+  }
+
+  function updateStatus() {
+    const status = document.getElementById('status');
+    if (pickedStation) {
+      status.textContent = Homey.__('pair.ready');
+      status.className = 'status ready';
+    } else {
+      status.textContent = '';
+      status.className = 'status';
+    }
+  }
+
+  function persistIfReady() {
+    if (pickedStation) {
+      Homey.emit('set_station', pickedStation).then(clearError).catch(showError);
+    } else {
+      Homey.emit('clear_station', null).catch(function () {});
+    }
+  }
+
+  const input = document.getElementById('stationInput');
+  const results = document.getElementById('stationResults');
+  const selected = document.getElementById('stationSelected');
+
+  let timer;
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    const q = input.value.trim();
+    if (q.length < 2) { results.innerHTML = ''; return; }
+    timer = setTimeout(function () {
+      Homey.emit('search', q)
+        .then(function (stations) { renderResults(stations || []); })
+        .catch(showError);
+    }, 250);
+  });
+
+  function renderResults(stations) {
+    results.innerHTML = '';
+    stations.slice(0, 12).forEach(function (s) {
+      const div = document.createElement('div');
+      div.className = 'result';
+      div.textContent = s.name + (s.country && s.country !== 'NL' ? ' (' + s.country + ')' : '');
+      div.addEventListener('click', function () { pick(s); });
+      results.appendChild(div);
+    });
+  }
+
+  function pick(station) {
+    pickedStation = station;
+    input.value = '';
+    results.innerHTML = '';
+    selected.innerHTML = station.name + ' <button type="button" class="clear" aria-label="Clear">×</button>';
+    selected.style.display = 'block';
+    selected.querySelector('.clear').addEventListener('click', function () {
+      pickedStation = null;
+      selected.style.display = 'none';
+      updateStatus();
+      persistIfReady();
+    });
+    updateStatus();
+    persistIfReady();
+  }
+
+  updateStatus();
+</script>
+
+<style type="text/css">
+  .form-wrapper { padding: 8px; }
+  .hint { color: #555; margin: 0 0 12px; }
+  .results { margin-top: 4px; max-height: 240px; overflow-y: auto; }
+  .result { padding: 8px 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+  .result:hover { background: #f7f7f7; }
+  .selected { display: none; margin-top: 6px; padding: 8px 10px; background: #e6f0ff; border-radius: 4px; font-weight: 600; }
+  .selected .clear { float: right; background: none; border: 0; color: #999; cursor: pointer; font-size: 16px; padding: 0 4px; }
+  .status { margin-top: 12px; color: #555; font-size: 13px; min-height: 1em; }
+  .status.ready { color: #1f6f1f; font-weight: 600; }
+  .alert { margin-top: 12px; padding: 8px 10px; background: #fbeaea; color: #8a1f1f; border-radius: 4px; }
+  .hidden { display: none; }
+</style>

@@ -1,0 +1,27 @@
+{
+  "id": "trip_departure_delayed",
+  "title": {
+    "en": "Next train delayed by more than",
+    "nl": "Volgende trein vertraagd met meer dan",
+    "de": "Nächster Zug verspätet um mehr als"
+  },
+  "titleFormatted": {
+    "en": "Next train delayed by more than [[minutes]] minutes",
+    "nl": "Volgende trein vertraagd met meer dan [[minutes]] minuten",
+    "de": "Nächster Zug verspätet um mehr als [[minutes]] Minuten"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=trip" },
+    { "name": "minutes", "type": "number", "min": 1, "max": 120, "step": 1,
+      "title": { "en": "Minutes", "nl": "Minuten", "de": "Minuten" },
+      "placeholder": { "en": "5", "nl": "5", "de": "5" } }
+  ],
+  "tokens": [
+    { "name": "departure_time", "type": "string",
+      "title": { "en": "Departure", "nl": "Vertrek", "de": "Abfahrt" }, "example": "08:42" },
+    { "name": "destination", "type": "string",
+      "title": { "en": "Destination", "nl": "Bestemming", "de": "Ziel" }, "example": "Kropswolde" },
+    { "name": "delay_minutes", "type": "number",
+      "title": { "en": "Delay (min)", "nl": "Vertraging (min)", "de": "Verspätung (Min)" }, "example": 7 }
+  ]
+}
