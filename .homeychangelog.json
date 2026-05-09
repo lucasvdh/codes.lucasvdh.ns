@@ -1,5 +1,10 @@
 {
   "0.1.0": {
     "en": "Initial version"
+  },
+  "0.1.1": {
+    "en": "Local-only platform; added homepage, support and donate links; cleaned up descriptions.",
+    "nl": "Alleen-lokaal platform; homepage-, support- en donatielinks toegevoegd; beschrijvingen opgeschoond.",
+    "de": "Nur-lokal-Plattform; Homepage-, Support- und Spendenlinks ergänzt; Beschreibungen aufgeräumt."
   }
 }

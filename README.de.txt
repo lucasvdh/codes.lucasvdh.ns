@@ -3,5 +3,3 @@ Hol dir die niederländische Bahn (NS) auf dein Homey. Füge einen Bahnhof oder 
 Die App verwendet die offiziellen öffentlichen NS-APIs und benötigt einen kostenlosen persönlichen API-Schlüssel. Schritt-für-Schritt-Einrichtung und vollständige Dokumentation (auf Englisch):
 
 https://homey-nederlandse-spoorwegen.gitbook.io/docs-en
-
-Hinweis: Dies ist eine inoffizielle Drittanbieter-App und steht in keiner Verbindung zur NS Groep N.V.

@@ -3,5 +3,3 @@ Bring Dutch Railways (NS) into your Homey. Pin a station or a route as a device 
 This app uses the official NS public APIs and needs a free personal API key. Setup walkthrough and full documentation:
 
 https://homey-nederlandse-spoorwegen.gitbook.io/docs-en
-
-Disclaimer: this is an unofficial third-party app and is not affiliated with NS Groep N.V.

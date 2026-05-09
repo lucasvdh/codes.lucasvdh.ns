@@ -17,7 +17,7 @@
     "cancelled_value",
     "track_value"
   ],
-  "platforms": ["local", "cloud"],
+  "platforms": ["local"],
   "connectivity": ["cloud"],
   "images": {
     "large": "{{driverAssetsPath}}/images/large.png",

@@ -1,6 +1,6 @@
 {
   "id": "codes.lucasvdh.ns",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#003082",
@@ -15,7 +15,7 @@
     "de": "Abfahrtszeiten, Reiseauskunft und Störungen der niederländischen Bahn (NS)"
   },
   "category": "tools",
-  "platforms": ["local", "cloud"],
+  "platforms": ["local"],
   "tags": {
     "en": ["NS", "trains", "Dutch Railways", "departures", "disruptions"],
     "nl": ["NS", "trein", "vertrektijden", "storingen", "reisadvies"],
@@ -35,8 +35,17 @@
       { "name": "Lucas van der Have", "email": "lucasvdhave@gmail.com" }
     ]
   },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "lucasvdh"
+      }
+    }
+  },
   "bugs": {
     "url": "https://github.com/lucasvdh/codes.lucasvdh.ns/issues"
   },
-  "source": "https://github.com/lucasvdh/codes.lucasvdh.ns"
+  "source": "https://github.com/lucasvdh/codes.lucasvdh.ns",
+  "homepage": "https://homey-nederlandse-spoorwegen.gitbook.io/docs-en",
+  "support": "https://github.com/lucasvdh/codes.lucasvdh.ns/issues"
 }
