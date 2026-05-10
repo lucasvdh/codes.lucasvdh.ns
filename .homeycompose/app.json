@@ -1,13 +1,13 @@
 {
   "id": "codes.lucasvdh.ns",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "brandColor": "#003082",
   "name": {
-    "en": "NS",
-    "nl": "NS",
-    "de": "NS"
+    "en": "Dutch Railways",
+    "nl": "Nederlandse Spoorwegen",
+    "de": "Niederländische Bahn"
   },
   "description": {
     "en": "Dutch Railways (NS) departures, trip planning and disruptions",
@@ -17,9 +17,9 @@
   "category": "tools",
   "platforms": ["local"],
   "tags": {
-    "en": ["NS", "trains", "Dutch Railways", "departures", "disruptions"],
-    "nl": ["NS", "trein", "vertrektijden", "storingen", "reisadvies"],
-    "de": ["NS", "Zug", "Abfahrtszeiten", "Störungen", "Reiseauskunft"]
+    "en": ["NS", "Nederlandse Spoorwegen", "Dutch Railways", "trains", "Netherlands", "departures", "disruptions", "trip planner", "public transport"],
+    "nl": ["NS", "Nederlandse Spoorwegen", "trein", "vertrektijden", "storingen", "reisadvies", "OV", "openbaar vervoer", "spoorwegen", "station"],
+    "de": ["NS", "Nederlandse Spoorwegen", "Niederländische Bahn", "Niederlande", "Zug", "Abfahrtszeiten", "Störungen", "Reiseauskunft", "Fahrplan", "Bahnhof"]
   },
   "images": {
     "xlarge": "./assets/images/xlarge.png",

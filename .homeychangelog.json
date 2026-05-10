@@ -6,5 +6,10 @@
     "en": "Local-only platform; added homepage, support and donate links; cleaned up descriptions.",
     "nl": "Alleen-lokaal platform; homepage-, support- en donatielinks toegevoegd; beschrijvingen opgeschoond.",
     "de": "Nur-lokal-Plattform; Homepage-, Support- und Spendenlinks ergänzt; Beschreibungen aufgeräumt."
+  },
+  "0.2.0": {
+    "en": "Renamed the app for better findability and refreshed the Station and Trip driver images.",
+    "nl": "Naam aangepast voor betere vindbaarheid en nieuwe afbeeldingen voor de Station- en Trajectdrivers.",
+    "de": "App umbenannt für bessere Auffindbarkeit und neue Bilder für die Bahnhof- und Verbindungs-Driver."
   }
 }
