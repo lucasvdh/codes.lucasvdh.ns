@@ -43,7 +43,7 @@ const CROWD_RANK: Record<string, number> = { unknown: 0, low: 1, medium: 2, high
 
 class TripDevice extends Homey.Device {
   private pollTimer?: NodeJS.Timeout;
-  // null = unknown (e.g. after restart, a stale warning may still be set).
+  // null: a warning from before a restart may still be set.
   private apiWarningShown: boolean | null = null;
   private lastSnapshot?: TripSnapshot;
   private previousTrains: Map<string, PerTrainSnapshot> = new Map();
@@ -126,7 +126,6 @@ class TripDevice extends Homey.Device {
     try {
       trips = await app.getApi().planTrip({ fromStation: route.fromCode, toStation: route.toCode });
     } catch (e) {
-      // Keep the last known values; just flag that they may be stale.
       this.error('planTrip failed', e);
       await this.setApiWarning(true);
       return;
