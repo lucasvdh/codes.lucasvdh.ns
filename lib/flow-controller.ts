@@ -2,6 +2,7 @@ import type Homey from 'homey';
 import { getDelaySecondsForLeg, isStillUpcoming } from './ns-api';
 import { currentOrNextNlWindow, formatNlTime, parseHHMM } from './tz';
 import { DelayChangeTracker } from './delay-change';
+import { becameProblematic, type TrainProblemState } from './train-problem';
 import type {
   Arrival,
   DelayChangeState,
@@ -89,6 +90,14 @@ export class FlowController {
         .getDeviceTriggerCard(cardId)
         .registerRunListener(async (args: { minutes: number }, state: DelayTriggerState) => (
           crossedDelayThreshold(args.minutes, state)
+        ));
+    }
+
+    for (const cardId of ['train_problem', 'trip_train_problem']) {
+      this.flow
+        .getDeviceTriggerCard(cardId)
+        .registerRunListener(async (args: { minutes: number }, state: TrainProblemState) => (
+          becameProblematic(args.minutes, state)
         ));
     }
 

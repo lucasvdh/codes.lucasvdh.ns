@@ -46,6 +46,12 @@ Fires when the delay of the next departure has changed by at least X minutes sin
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
 
+#### Problem with next departure
+
+Fires once per train when the next departure becomes a problem: cancelled, or delayed by more than X minutes. Use X = 0 for any delay. It does not fire again while the problem continues.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`, `cancelled`, `reason`.
+
 #### Track changed
 
 Fires when the **same** upcoming train switches to a different track. Doesn't fire on the first sighting after pairing.
@@ -54,9 +60,9 @@ Fires when the **same** upcoming train switches to a different track. Doesn't fi
 
 ### Trip device
 
-#### Next train changed / another train is now the next train / delayed / delay changed / cancelled / track changed
+#### Next train changed / another train is now the next train / delayed / delay changed / problem with next train / cancelled / track changed
 
-Same shape as the Station-device versions, scoped to the configured route. The "track changed" trigger reports the origin track of the trip's first leg.
+Same shape as the Station-device versions, scoped to the configured route. The "track changed" trigger reports the origin track of the trip's first leg. "Problem with next train" also fires on a disruption message for the trip and has an extra `disruption` token.
 
 #### Shorter train announced
 

@@ -46,6 +46,12 @@ Vuurt als de vertraging van het volgende vertrek sinds de vorige keer dat deze F
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
 
+#### Probleem met volgend vertrek
+
+Vuurt één keer per trein als het volgende vertrek een probleem krijgt: uitgevallen, of meer dan X minuten vertraagd. Gebruik X = 0 voor elke vertraging. Vuurt niet opnieuw zolang het probleem aanhoudt.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`, `cancelled`, `reason`.
+
 #### Spoor gewijzigd
 
 Vuurt als **dezelfde** komende trein op een ander spoor wordt aangekondigd. Vuurt niet bij de eerste waarneming na koppelen.
@@ -54,9 +60,9 @@ Vuurt als **dezelfde** komende trein op een ander spoor wordt aangekondigd. Vuur
 
 ### Trajectapparaat
 
-#### Volgende trein gewijzigd / andere trein is nu de volgende trein / vertraagd / vertraging veranderd / uitgevallen / spoor gewijzigd
+#### Volgende trein gewijzigd / andere trein is nu de volgende trein / vertraagd / vertraging veranderd / probleem met volgende trein / uitgevallen / spoor gewijzigd
 
-Zelfde vorm als de Station-versies, maar dan voor de geconfigureerde route. De "spoor gewijzigd"-trigger meldt het vertrekspoor van het eerste traject-deel.
+Zelfde vorm als de Station-versies, maar dan voor de geconfigureerde route. De "spoor gewijzigd"-trigger meldt het vertrekspoor van het eerste traject-deel. "Probleem met volgende trein" vuurt ook bij een storingsmelding voor het traject en heeft een extra `disruption`-token.
 
 #### Kortere trein aangekondigd
 

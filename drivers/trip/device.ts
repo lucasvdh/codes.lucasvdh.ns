@@ -3,6 +3,7 @@ import type { CrowdLevel, DelayChangeState, DelayTriggerState, Trip } from '../.
 import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { departureTimeTokens, formatNlTime, todayNlWallTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
+import { describeProblem, sameStatus, type TrainProblemState, type TrainStatus } from '../../lib/train-problem';
 
 interface DeviceStore {
   fromCode: string;
@@ -546,6 +547,27 @@ class TripDevice extends Homey.Device {
           crowd_level: snapshot.crowdLevel,
         }, { level: crowdLow, _rank: CROWD_RANK[crowdLow] })
         .catch((e) => this.error('crowd_busy trigger failed', e));
+    }
+
+    const status: TrainStatus = {
+      delayMinutes: snapshot.delayMinutes,
+      cancelled: snapshot.cancelled,
+      disrupted: snapshot.hasDisruption,
+    };
+    const previousStatus: TrainStatus | null = trainChanged
+      ? null
+      : { delayMinutes: prev.delayMinutes, cancelled: prev.cancelled, disrupted: prev.hasDisruption };
+    if (!previousStatus || !sameStatus(status, previousStatus)) {
+      const problemState: TrainProblemState = { current: status, previous: previousStatus };
+      this.homey.flow
+        .getDeviceTriggerCard('trip_train_problem')
+        .trigger(this, {
+          ...delayTokens,
+          cancelled: snapshot.cancelled,
+          disruption: snapshot.hasDisruption,
+          reason: describeProblem(status, this.homey.__.bind(this.homey)),
+        }, problemState)
+        .catch((e) => this.error('trip_train_problem trigger failed', e));
     }
   }
 

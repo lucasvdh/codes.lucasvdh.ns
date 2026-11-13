@@ -25,7 +25,8 @@
     "event_cancelled": "cancelled",
     "event_now_crowd": "now {{level}}",
     "event_shorter_announced": "shorter train announced",
-    "event_delay_increased": "+{{minutes}} min"
+    "event_delay_increased": "+{{minutes}} min",
+    "disruption": "disruption"
   },
   "pair": {
     "title": "Pick a route",

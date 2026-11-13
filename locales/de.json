@@ -25,7 +25,8 @@
     "event_cancelled": "ausgefallen",
     "event_now_crowd": "jetzt {{level}}",
     "event_shorter_announced": "kürzerer Zug angekündigt",
-    "event_delay_increased": "+{{minutes}} Min"
+    "event_delay_increased": "+{{minutes}} Min",
+    "disruption": "Störung"
   },
   "pair": {
     "title": "Verbindung wählen",
