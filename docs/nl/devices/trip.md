@@ -24,7 +24,7 @@ Kies een **Van**- en **Naar**-station via autocomplete. Beide velden doorzoeken 
 | Bestemming | tekst | Eindstation van de route (na overstappen). |
 | Spoor | tekst | Vertrekspoor op het beginstation. |
 | Vertraging (min) | nummer | Vertrekvertraging in minuten. |
-| Storing | alarm | Aan als de reis een storings-/calamiteitsbericht heeft. |
+| Storing | alarm | Aan bij een storing, calamiteit of vervangend vervoer vanwege een storing. Gepland onderhoud telt niet mee. |
 | Uitgevallen | alarm | Aan als een traject-deel is uitgevallen. |
 | Kortere trein | alarm | Aan als NS een verkorte treinlengte aankondigt. |
 | Drukte | enum (`unknown`/`low`/`medium`/`high`) | Voorspelling voor de volgende trein. |

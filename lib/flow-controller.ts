@@ -1,5 +1,5 @@
 import type Homey from 'homey';
-import { getDelaySecondsForLeg, isStillUpcoming } from './ns-api';
+import { getDelaySecondsForLeg, isStillUpcoming, tripHasDisruption } from './ns-api';
 import { currentOrNextNlWindow, formatNlTime, parseHHMM } from './tz';
 import { DelayChangeTracker } from './delay-change';
 import { becameProblematic, type TrainProblemState } from './train-problem';
@@ -271,8 +271,7 @@ export class FlowController {
       const delayMin = Math.round(delaySec / 60);
       const track = firstLeg.origin.actualTrack || firstLeg.origin.plannedTrack || '';
       const cancelled = trip.legs.some((l) => l.cancelled) || trip.status === 'CANCELLED';
-      const disruption = !!(trip.primaryMessage && trip.primaryMessage.type)
-        || (trip.messages?.some((m) => m.type === 'DISRUPTION' || m.type === 'CALAMITY') ?? false);
+      const disruption = tripHasDisruption(trip);
 
       tokens[`${prefix}_departure_time`] = formatNlTime(dep);
       tokens[`${prefix}_arrival_time`] = formatNlTime(arr);
@@ -404,8 +403,7 @@ export class FlowController {
     const track = firstLeg.origin.actualTrack || firstLeg.origin.plannedTrack || '';
     const cancelled = inWindow.legs.some((l) => l.cancelled) || inWindow.status === 'CANCELLED';
     const shorterStock = inWindow.legs.some((l) => l.shorterStock);
-    const hasDisruption = !!(inWindow.primaryMessage && inWindow.primaryMessage.type)
-      || (inWindow.messages?.some((m) => m.type === 'DISRUPTION' || m.type === 'CALAMITY') ?? false);
+    const hasDisruption = tripHasDisruption(inWindow);
     const crowdLevel = inWindow.crowdForecast ?? firstLeg.crowdForecast ?? 'UNKNOWN';
     const trainType = firstLeg.product?.shortCategoryName || '';
 

@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { getDelaySeconds, isStillUpcoming, trackToNumber } from '../lib/ns-api';
-import type { Departure } from '../lib/types';
+import { getDelaySeconds, isStillUpcoming, trackToNumber, tripHasDisruption } from '../lib/ns-api';
+import type { Departure, Trip } from '../lib/types';
 
 const departure = (planned: string, actual?: string) => (
   { plannedDateTime: planned, actualDateTime: actual } as Departure
@@ -40,5 +40,22 @@ describe('trackToNumber', () => {
     assert.equal(trackToNumber('14b'), 14);
     assert.equal(trackToNumber(''), 0);
     assert.equal(trackToNumber('a'), 0);
+  });
+});
+
+describe('tripHasDisruption', () => {
+  const trip = (fields: Partial<Trip>) => ({ status: 'NORMAL', legs: [], ...fields } as unknown as Trip);
+
+  it('flags disruptions from status, primary message and messages', () => {
+    assert.equal(tripHasDisruption(trip({ status: 'DISRUPTION' })), true);
+    assert.equal(tripHasDisruption(trip({ primaryMessage: { type: 'ALTERNATIVE_TRANSPORT' } })), true);
+    assert.equal(tripHasDisruption(trip({ messages: [{ type: 'CALAMITY' }] })), true);
+  });
+
+  it('ignores planned work and notices', () => {
+    for (const type of ['MAINTENANCE', 'REPLACEMENT', 'ADDITIONAL', 'SHORTENED_TRAIN']) {
+      assert.equal(tripHasDisruption(trip({ primaryMessage: { type } })), false, type);
+    }
+    assert.equal(tripHasDisruption(trip({ status: 'MAINTENANCE', messages: [{ type: 'MAINTENANCE' }] })), false);
   });
 });

@@ -1,6 +1,6 @@
 import Homey from 'homey';
 import type { CrowdLevel, DelayChangeState, DelayTriggerState, Trip } from '../../lib/types';
-import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
+import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber, tripHasDisruption } from '../../lib/ns-api';
 import { departureTimeTokens, formatNlTime, todayNlWallTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
 import { describeProblem, sameStatus, type TrainProblemState, type TrainStatus } from '../../lib/train-problem';
@@ -395,8 +395,7 @@ class TripDevice extends Homey.Device {
     const plannedTrack = firstLeg.origin.plannedTrack ?? '';
     const actualTrack = firstLeg.origin.actualTrack || plannedTrack;
     const cancelled = next.legs.some((l) => l.cancelled) || next.status === 'CANCELLED';
-    const hasDisruption = !!(next.primaryMessage && next.primaryMessage.type)
-      || (next.messages?.some((m) => m.type === 'DISRUPTION' || m.type === 'CALAMITY') ?? false);
+    const hasDisruption = tripHasDisruption(next);
     const crowdLevel = (next.crowdForecast || firstLeg.crowdForecast || 'UNKNOWN') as CrowdLevel;
     const shorterLeg = next.legs.find((l) => l.shorterStock);
     const shorterStock = !!shorterLeg;

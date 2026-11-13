@@ -330,6 +330,15 @@ export function isStillUpcoming(iso: string | undefined | null, graceSeconds = 6
   return ms > Date.now() - graceSeconds * 1000;
 }
 
+// Planned work (MAINTENANCE, REPLACEMENT) and notices like SHORTENED_TRAIN are not disruptions.
+const DISRUPTION_TYPES = new Set(['DISRUPTION', 'ALTERNATIVE_TRANSPORT', 'LEG_TRANSFER_IMPOSSIBLE', 'CHANGE_NOT_POSSIBLE']);
+
+export function tripHasDisruption(trip: Trip): boolean {
+  if (trip.status && DISRUPTION_TYPES.has(trip.status)) return true;
+  if (trip.primaryMessage?.type && DISRUPTION_TYPES.has(trip.primaryMessage.type)) return true;
+  return trip.messages?.some((m) => m.type === 'DISRUPTION' || m.type === 'CALAMITY') ?? false;
+}
+
 export function trackToNumber(track: string | undefined | null): number {
   if (!track) return 0;
   const m = track.match(/^(\d+)/);
