@@ -3,7 +3,9 @@
     "no_api_key": "NS API key is not configured. Open the app settings to add it.",
     "no_upcoming_trips": "No upcoming trips found",
     "no_upcoming_departures": "No upcoming departures found",
+    "no_upcoming_departures_direction": "No upcoming departures towards {{direction}}",
     "no_upcoming_arrivals": "No upcoming arrivals found",
+    "no_upcoming_arrivals_origin": "No upcoming arrivals from {{origin}}",
     "no_trip_route": "Trip device has no origin/destination stored",
     "pick_route_first": "Pick an origin and destination station first.",
     "pick_station_first": "Pick a station first."

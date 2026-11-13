@@ -3,7 +3,9 @@
     "no_api_key": "NS API-sleutel is niet ingesteld. Open de app-instellingen om deze toe te voegen.",
     "no_upcoming_trips": "Geen aankomende reisadviezen gevonden",
     "no_upcoming_departures": "Geen aankomende vertrektijden gevonden",
+    "no_upcoming_departures_direction": "Geen aankomende vertrektijden richting {{direction}}",
     "no_upcoming_arrivals": "Geen aankomende aankomsten gevonden",
+    "no_upcoming_arrivals_origin": "Geen aankomende aankomsten vanuit {{origin}}",
     "no_trip_route": "Trajectapparaat heeft geen vertrek-/aankomststation opgeslagen",
     "pick_route_first": "Kies eerst een vertrek- en aankomststation.",
     "pick_station_first": "Kies eerst een station."

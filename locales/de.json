@@ -3,7 +3,9 @@
     "no_api_key": "NS-API-Schlüssel ist nicht konfiguriert. Öffne die App-Einstellungen, um ihn hinzuzufügen.",
     "no_upcoming_trips": "Keine bevorstehenden Verbindungen gefunden",
     "no_upcoming_departures": "Keine bevorstehenden Abfahrten gefunden",
+    "no_upcoming_departures_direction": "Keine bevorstehenden Abfahrten Richtung {{direction}}",
     "no_upcoming_arrivals": "Keine bevorstehenden Ankünfte gefunden",
+    "no_upcoming_arrivals_origin": "Keine bevorstehenden Ankünfte aus {{origin}}",
     "no_trip_route": "Verbindungsgerät hat keine Start-/Zielstation gespeichert",
     "pick_route_first": "Wähle zuerst einen Start- und Zielbahnhof.",
     "pick_station_first": "Wähle zuerst einen Bahnhof."
