@@ -42,6 +42,13 @@ export function formatNlTime(iso: string): string {
   return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
 }
 
+export function departureTimeTokens(plannedISO: string, expectedISO?: string | null) {
+  return {
+    planned_departure_time: formatNlTime(plannedISO),
+    expected_departure_time: formatNlTime(expectedISO || plannedISO),
+  };
+}
+
 export function nlMinutesOfDay(iso: string): number | null {
   if (!iso) return null;
   const d = new Date(iso);

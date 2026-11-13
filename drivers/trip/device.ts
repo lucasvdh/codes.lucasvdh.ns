@@ -1,7 +1,7 @@
 import Homey from 'homey';
 import type { CrowdLevel, DelayTriggerState, Trip } from '../../lib/types';
 import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
-import { formatNlTime, todayNlWallTime } from '../../lib/tz';
+import { departureTimeTokens, formatNlTime, todayNlWallTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
 
 interface DeviceStore {
@@ -19,6 +19,7 @@ interface DeviceSettings {
 
 interface TripSnapshot {
   ctxRecon: string;
+  plannedDeparture: string;
   effectiveDeparture: string;
   plannedTrack: string;
   actualTrack: string;
@@ -255,6 +256,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_late_train_warning')
         .trigger(this, {
           departure_time: depTime,
+          ...departureTimeTokens(depISO, firstLeg.origin.actualDateTime),
           destination,
           track,
           delay_minutes: delayMin,
@@ -332,6 +334,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_train_window_state')
         .trigger(this, {
           departure_time: depTime,
+          ...departureTimeTokens(plannedISO, snap.effectiveDeparture),
           destination: snap.destination,
           event,
           crowd_level: snap.crowdLevel,
@@ -403,6 +406,7 @@ class TripDevice extends Homey.Device {
 
     const snapshot: TripSnapshot = {
       ctxRecon: next.ctxRecon,
+      plannedDeparture: planned,
       effectiveDeparture: effective,
       plannedTrack,
       actualTrack,
@@ -439,6 +443,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_departure_changed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
           track: snapshot.actualTrack,
           delay_minutes: snapshot.delayMinutes,
@@ -455,6 +460,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_departure_delayed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
           delay_minutes: snapshot.delayMinutes,
         }, state)
@@ -470,6 +476,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_track_changed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
           previous_track: prev.actualTrack,
           new_track: snapshot.actualTrack,
@@ -482,6 +489,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('trip_cancelled')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
         })
         .catch((e) => this.error('trip_cancelled trigger failed', e));
@@ -492,6 +500,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('shorter_train')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
           warning: extras.shorterWarning,
           classification: extras.shorterClassification,
@@ -509,6 +518,7 @@ class TripDevice extends Homey.Device {
         .getDeviceTriggerCard('crowd_busy')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
+          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
           destination,
           crowd_level: snapshot.crowdLevel,
         }, { level: crowdLow, _rank: CROWD_RANK[crowdLow] })

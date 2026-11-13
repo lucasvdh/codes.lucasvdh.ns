@@ -2,7 +2,7 @@ import Homey from 'homey';
 import type NsApp from '../../app';
 import type { DelayTriggerState, Departure, Disruption } from '../../lib/types';
 import { getDelaySeconds, getEffectiveDateTime, getEffectiveTrack, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
-import { formatNlTime } from '../../lib/tz';
+import { departureTimeTokens, formatNlTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
 
 interface DeviceStore {
@@ -224,6 +224,7 @@ class StationDevice extends Homey.Device {
         .getDeviceTriggerCard('departure_changed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDateTime),
+          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
           destination: snapshot.destination,
           track: snapshot.actualTrack,
           delay_minutes: snapshot.delayMinutes,
@@ -240,6 +241,7 @@ class StationDevice extends Homey.Device {
         .getDeviceTriggerCard('departure_delayed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDateTime),
+          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
           destination: snapshot.destination,
           delay_minutes: snapshot.delayMinutes,
         }, state)
@@ -256,6 +258,7 @@ class StationDevice extends Homey.Device {
         .getDeviceTriggerCard('track_changed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDateTime),
+          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
           destination: snapshot.destination,
           previous_track: prev.actualTrack,
           new_track: snapshot.actualTrack,
@@ -269,6 +272,7 @@ class StationDevice extends Homey.Device {
         .getDeviceTriggerCard('departure_cancelled')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.plannedDateTime),
+          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
           destination: snapshot.destination,
           train_type: snapshot.trainType,
         })

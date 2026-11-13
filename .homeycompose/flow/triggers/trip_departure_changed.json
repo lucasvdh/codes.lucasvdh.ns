@@ -16,6 +16,10 @@
   "tokens": [
     { "name": "departure_time", "type": "string",
       "title": { "en": "Departure", "nl": "Vertrek", "de": "Abfahrt" }, "example": "08:42" },
+    { "name": "planned_departure_time", "type": "string",
+      "title": { "en": "Planned departure", "nl": "Gepland vertrek", "de": "Geplante Abfahrt" }, "example": "08:40" },
+    { "name": "expected_departure_time", "type": "string",
+      "title": { "en": "Expected departure", "nl": "Verwacht vertrek", "de": "Erwartete Abfahrt" }, "example": "08:42" },
     { "name": "destination", "type": "string",
       "title": { "en": "Destination", "nl": "Bestemming", "de": "Ziel" }, "example": "Kropswolde" },
     { "name": "track", "type": "string",
