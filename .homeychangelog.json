@@ -11,5 +11,10 @@
     "en": "Renamed the app for better findability and refreshed the Station and Trip driver images.",
     "nl": "Naam aangepast voor betere vindbaarheid en nieuwe afbeeldingen voor de Station- en Trajectdrivers.",
     "de": "App umbenannt für bessere Auffindbarkeit und neue Bilder für die Bahnhof- und Verbindungs-Driver."
+  },
+  "0.2.1": {
+    "en": "Delay triggers now respect the minutes threshold and fire once per train. Cancelled trains are reported, values are kept when the NS API is unreachable, and no triggers fire after a restart. Fixed disruption alerts, the time window card, late trains after midnight and the direction filter.",
+    "nl": "Vertragingstriggers houden zich nu aan de drempel en gaan één keer per trein af. Opgeheven treinen worden gemeld, waarden blijven staan als de NS API onbereikbaar is en na een herstart gaan er geen triggers meer af. Storingsmeldingen, de tijdvensterkaart, late treinen na middernacht en het richtingfilter gerepareerd.",
+    "de": "Verspätungsauslöser beachten jetzt die Minutenschwelle und lösen einmal pro Zug aus. Ausgefallene Züge werden gemeldet, Werte bleiben erhalten, wenn die NS-API nicht erreichbar ist, und nach einem Neustart lösen keine Auslöser mehr aus. Störungsmeldungen, die Zeitfenster-Karte, späte Züge nach Mitternacht und der Richtungsfilter wurden behoben."
   }
 }
