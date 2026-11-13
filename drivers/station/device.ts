@@ -29,6 +29,8 @@ interface DepartureSnapshot {
 
 class StationDevice extends Homey.Device {
   private pollTimer?: NodeJS.Timeout;
+  // Bumped on every (re)start so a refresh still in flight can't schedule a second loop.
+  private pollGeneration = 0;
   // null: a warning from before a restart may still be set.
   private apiWarningShown: boolean | null = null;
   private lastSnapshot?: DepartureSnapshot;
@@ -62,7 +64,7 @@ class StationDevice extends Homey.Device {
   }
 
   async onUninit(): Promise<void> {
-    if (this.pollTimer) this.homey.clearTimeout(this.pollTimer);
+    this.stopPolling();
   }
 
   public async onAppApiKeyChanged(): Promise<void> {
@@ -76,15 +78,23 @@ class StationDevice extends Homey.Device {
   }
 
   private startPolling(): void {
-    if (this.pollTimer) this.homey.clearTimeout(this.pollTimer);
+    this.stopPolling();
+    const generation = this.pollGeneration;
 
     const tick = (): void => {
       this.refresh()
         .catch((e) => this.error('refresh failed', e))
-        .finally(() => this.scheduleNextPoll(tick));
+        .finally(() => {
+          if (generation === this.pollGeneration) this.scheduleNextPoll(tick);
+        });
     };
 
     this.scheduleNextPoll(tick);
+  }
+
+  private stopPolling(): void {
+    this.pollGeneration++;
+    if (this.pollTimer) this.homey.clearTimeout(this.pollTimer);
   }
 
   private scheduleNextPoll(tick: () => void): void {
