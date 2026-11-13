@@ -9,6 +9,9 @@ class NsApp extends Homey.App {
   private api!: NsApi;
   private flowController!: FlowController;
   private knownDisruptionIds = new Set<string>();
+  // False until the first successful fetch; that fetch only sets the baseline
+  // so already-active disruptions don't fire on app start.
+  private disruptionsInitialized = false;
   private disruptionInterval?: NodeJS.Timeout;
 
   async onInit(): Promise<void> {
@@ -84,12 +87,13 @@ class NsApp extends Homey.App {
     const currentIds = new Set<string>();
     for (const d of disruptions) {
       currentIds.add(d.id);
-      if (!this.knownDisruptionIds.has(d.id) && this.knownDisruptionIds.size > 0) {
+      if (this.disruptionsInitialized && !this.knownDisruptionIds.has(d.id)) {
         await this.flowController.fireDisruptionStarted(d);
       }
     }
 
     this.knownDisruptionIds = currentIds;
+    this.disruptionsInitialized = true;
   }
 }
 
