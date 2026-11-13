@@ -199,10 +199,11 @@ class StationDevice extends Homey.Device {
 
   private async checkAndFireDepartureTriggers(snapshot: DepartureSnapshot): Promise<void> {
     const prev = this.lastSnapshot;
+    // The first observation only sets the baseline, so restarts don't fire triggers.
+    if (!prev) return;
 
-    const trainChanged = !prev || prev.trainNumber !== snapshot.trainNumber;
+    const trainChanged = prev.trainNumber !== snapshot.trainNumber;
     const departureChanged =
-      !prev ||
       trainChanged ||
       prev.effectiveDateTime !== snapshot.effectiveDateTime ||
       prev.actualTrack !== snapshot.actualTrack ||
@@ -222,7 +223,7 @@ class StationDevice extends Homey.Device {
     }
 
     // The run listener decides whether the Flow's threshold was crossed.
-    const previousDelay = prev && !trainChanged ? prev.delayMinutes : null;
+    const previousDelay = trainChanged ? null : prev.delayMinutes;
     if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
       const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
@@ -237,7 +238,6 @@ class StationDevice extends Homey.Device {
 
     // Track changed: same train but track shifted
     if (
-      prev &&
       !trainChanged &&
       prev.actualTrack !== snapshot.actualTrack &&
       snapshot.actualTrack !== ''
@@ -254,7 +254,7 @@ class StationDevice extends Homey.Device {
     }
 
     // Cancelled: just became cancelled
-    if (snapshot.cancelled && (!prev || !prev.cancelled || trainChanged)) {
+    if (snapshot.cancelled && (!prev.cancelled || trainChanged)) {
       this.homey.flow
         .getDeviceTriggerCard('departure_cancelled')
         .trigger(this, {
