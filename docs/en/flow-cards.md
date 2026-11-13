@@ -6,6 +6,8 @@ description: Every flow card the NS app exposes, with arguments and tokens.
 
 ## Triggers
 
+Departure triggers have three time tokens: `departure_time` (expected time; the planned time for cancellations), `planned_departure_time` (timetable) and `expected_departure_time` (including delay).
+
 ### App-level
 
 #### A disruption started
@@ -21,22 +23,22 @@ Fires when a new active disruption appears anywhere on the network.
 
 Fires when the upcoming departure shifts (different train, different time, different track, or it became cancelled).
 
-- **Tokens:** `departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
 #### Next departure delayed by more than \[X] minutes
 
 - **Argument:** *Minutes* (number).
-- **Tokens:** `departure_time`, `destination`, `delay_minutes`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
 
 #### Next departure cancelled
 
-- **Tokens:** `departure_time`, `destination`, `train_type`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
 
 #### Track changed
 
 Fires when the **same** upcoming train switches to a different track. Doesn't fire on the first sighting after pairing.
 
-- **Tokens:** `departure_time`, `destination`, `previous_track`, `new_track`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `previous_track`, `new_track`.
 
 ### Trip device
 
@@ -48,26 +50,26 @@ Same shape as the Station-device versions, scoped to the configured route. The "
 
 Fires when NS announces the next train will run with reduced length.
 
-- **Tokens:** `departure_time`, `destination`, `warning`, `classification`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `warning`, `classification`.
 
 #### Train is at least \[level] busy
 
 - **Argument:** *Level* (`medium` or `high`).
-- **Tokens:** `departure_time`, `destination`, `crowd_level`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `crowd_level`.
 
 #### Train state changed in time window
 
 Fires when a train that departs **between** the configured times changes state (cancelled, busier, shorter, or more delayed).
 
 - **Arguments:** *From time* (HH\:mm picker), *Until time* (HH\:mm picker), *Match on* (any change / became cancelled / became busy / became very busy / shorter announced / delay increased).
-- **Tokens:** `departure_time`, `destination`, `event`, `crowd_level`, `cancelled`, `delay_minutes`, `shorter_train`, `track`, `summary`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `event`, `crowd_level`, `cancelled`, `delay_minutes`, `shorter_train`, `track`, `summary`.
 
 #### Late train approaching
 
 Fires when the **last** or **second-to-last** train of the night reaches a configurable countdown — perfect for "don't miss the last train" automations.
 
 - **Arguments:** *Which* (`last` / `second_to_last`), *Minutes before* (number).
-- **Tokens:** `departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
 ## Conditions
 

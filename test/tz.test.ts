@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   currentOrNextNlWindow,
+  departureTimeTokens,
   formatNlTime,
   isNlIsoInWindow,
   nlWallTimeToDate,
@@ -84,5 +85,18 @@ describe('currentOrNextNlWindow', () => {
 
   it('uses the correct offset on a DST change day', () => {
     assert.equal(window('08:00', '08:30', '2026-03-29T06:10:00Z').start, '2026-03-29T06:00:00.000Z');
+  });
+});
+
+describe('departureTimeTokens', () => {
+  it('formats planned and expected times', () => {
+    assert.deepEqual(departureTimeTokens('2026-11-13T07:40:00Z', '2026-11-13T07:42:00Z'), {
+      planned_departure_time: '08:40',
+      expected_departure_time: '08:42',
+    });
+  });
+
+  it('falls back to the planned time without an expected time', () => {
+    assert.equal(departureTimeTokens('2026-11-13T07:40:00Z').expected_departure_time, '08:40');
   });
 });

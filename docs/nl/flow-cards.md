@@ -6,6 +6,8 @@ description: Alle flowkaarten van de NS-app, met argumenten en tokens.
 
 ## Triggers
 
+Vertrek-triggers hebben drie tijd-tokens: `departure_time` (verwachte tijd; bij uitval de geplande tijd), `planned_departure_time` (volgens dienstregeling) en `expected_departure_time` (inclusief vertraging).
+
 ### App-niveau
 
 #### Er is een storing begonnen
@@ -21,22 +23,22 @@ Vuurt als er een nieuwe actieve storing op het netwerk verschijnt.
 
 Vuurt als het komende vertrek verschuift (andere trein, andere tijd, ander spoor, of uitgevallen).
 
-- **Tokens:** `departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
 #### Volgende vertrek vertraagd met meer dan \[X] minuten
 
 - **Argument:** *Minuten* (nummer).
-- **Tokens:** `departure_time`, `destination`, `delay_minutes`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
 
 #### Volgende vertrek uitgevallen
 
-- **Tokens:** `departure_time`, `destination`, `train_type`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
 
 #### Spoor gewijzigd
 
 Vuurt als **dezelfde** komende trein op een ander spoor wordt aangekondigd. Vuurt niet bij de eerste waarneming na koppelen.
 
-- **Tokens:** `departure_time`, `destination`, `previous_track`, `new_track`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `previous_track`, `new_track`.
 
 ### Trajectapparaat
 
@@ -48,26 +50,26 @@ Zelfde vorm als de Station-versies, maar dan voor de geconfigureerde route. De "
 
 Vuurt als NS een verkorte treinlengte voor de volgende trein aankondigt.
 
-- **Tokens:** `departure_time`, `destination`, `warning`, `classification`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `warning`, `classification`.
 
 #### Trein is minstens \[level] druk
 
 - **Argument:** *Niveau* (`medium` of `high`).
-- **Tokens:** `departure_time`, `destination`, `crowd_level`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `crowd_level`.
 
 #### Treinstatus gewijzigd in tijdvenster
 
 Vuurt als een trein die **tussen** de geconfigureerde tijden vertrekt, van status verandert (uitgevallen, drukker, korter, meer vertraging).
 
 - **Argumenten:** *Vanaf tijd* (UU\:mm-picker), *Tot tijd* (UU\:mm-picker), *Activeer bij* (elke wijziging / werd uitgevallen / werd druk / werd extra druk / kortere trein aangekondigd / vertraging toegenomen).
-- **Tokens:** `departure_time`, `destination`, `event`, `crowd_level`, `cancelled`, `delay_minutes`, `shorter_train`, `track`, `summary`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `event`, `crowd_level`, `cancelled`, `delay_minutes`, `shorter_train`, `track`, `summary`.
 
 #### Late trein nadert
 
 Vuurt als de **laatste** of **één-na-laatste** trein van de avond een instelbare countdown bereikt — perfect voor "mis de laatste trein niet"-flows.
 
 - **Argumenten:** *Welke* (`last` / `second_to_last`), *Minuten ervoor* (nummer).
-- **Tokens:** `departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
 ## Condities
 
