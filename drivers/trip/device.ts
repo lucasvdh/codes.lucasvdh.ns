@@ -411,10 +411,12 @@ class TripDevice extends Homey.Device {
     extras: { shorterClassification: string; shorterWarning: string },
   ): Promise<void> {
     const prev = this.lastSnapshot;
-    const trainChanged = !prev || prev.ctxRecon !== snapshot.ctxRecon;
+    // The first observation only sets the baseline, so restarts don't fire triggers.
+    if (!prev) return;
+
+    const trainChanged = prev.ctxRecon !== snapshot.ctxRecon;
 
     const tripChanged =
-      !prev ||
       trainChanged ||
       prev.effectiveDeparture !== snapshot.effectiveDeparture ||
       prev.actualTrack !== snapshot.actualTrack ||
@@ -434,7 +436,7 @@ class TripDevice extends Homey.Device {
     }
 
     // The run listener decides whether the Flow's threshold was crossed.
-    const previousDelay = prev && !trainChanged ? prev.delayMinutes : null;
+    const previousDelay = trainChanged ? null : prev.delayMinutes;
     if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
       const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
@@ -448,7 +450,6 @@ class TripDevice extends Homey.Device {
     }
 
     if (
-      prev &&
       !trainChanged &&
       prev.actualTrack !== snapshot.actualTrack &&
       snapshot.actualTrack !== ''
@@ -464,7 +465,7 @@ class TripDevice extends Homey.Device {
         .catch((e) => this.error('trip_track_changed trigger failed', e));
     }
 
-    if (snapshot.cancelled && (!prev || !prev.cancelled || trainChanged)) {
+    if (snapshot.cancelled && (!prev.cancelled || trainChanged)) {
       this.homey.flow
         .getDeviceTriggerCard('trip_cancelled')
         .trigger(this, {
@@ -474,7 +475,7 @@ class TripDevice extends Homey.Device {
         .catch((e) => this.error('trip_cancelled trigger failed', e));
     }
 
-    if (snapshot.shorterStock && (!prev || !prev.shorterStock || trainChanged)) {
+    if (snapshot.shorterStock && (!prev.shorterStock || trainChanged)) {
       this.homey.flow
         .getDeviceTriggerCard('shorter_train')
         .trigger(this, {
@@ -487,7 +488,7 @@ class TripDevice extends Homey.Device {
     }
 
     const crowdLow = snapshot.crowdLevel.toLowerCase();
-    const prevCrowdLow = prev?.crowdLevel.toLowerCase() ?? 'unknown';
+    const prevCrowdLow = prev.crowdLevel.toLowerCase();
     if (
       (CROWD_RANK[crowdLow] ?? 0) >= CROWD_RANK.medium &&
       (trainChanged || crowdLow !== prevCrowdLow)
