@@ -46,6 +46,7 @@ Deze staan niet op de tegel, maar zijn wel grafiek-baar in Homey Insights:
 - Volgende vertrek gewijzigd
 - Andere trein is nu het volgende vertrek
 - Volgende vertrek vertraagd met meer dan \[X] minuten
+- Vertraging volgende vertrek veranderd met minstens \[X] minuten
 - Volgende vertrek uitgevallen
 - Spoor gewijzigd
 

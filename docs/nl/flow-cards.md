@@ -36,6 +36,12 @@ Vuurt als een andere trein het volgende vertrek wordt, bijvoorbeeld nadat de vor
 - **Argument:** *Minuten* (nummer).
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
 
+#### Vertraging volgende vertrek veranderd met minstens \[X] minuten
+
+Vuurt als de vertraging van het volgende vertrek sinds de vorige keer dat deze Flow afging met minstens X minuten is veranderd, omhoog of omlaag. Kleine stappen tellen op: 2 → 3 → 4 → 7 minuten vuurt één keer bij X = 5.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
+
 #### Volgende vertrek uitgevallen
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
@@ -48,7 +54,7 @@ Vuurt als **dezelfde** komende trein op een ander spoor wordt aangekondigd. Vuur
 
 ### Trajectapparaat
 
-#### Volgende trein gewijzigd / andere trein is nu de volgende trein / vertraagd / uitgevallen / spoor gewijzigd
+#### Volgende trein gewijzigd / andere trein is nu de volgende trein / vertraagd / vertraging veranderd / uitgevallen / spoor gewijzigd
 
 Zelfde vorm als de Station-versies, maar dan voor de geconfigureerde route. De "spoor gewijzigd"-trigger meldt het vertrekspoor van het eerste traject-deel.
 

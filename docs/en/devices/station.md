@@ -46,6 +46,7 @@ These don't appear on the device tile but are graphable in Homey Insights:
 - Next departure changed
 - Another train is now the next departure
 - Next departure delayed by more than \[X] minutes
+- Delay of next departure changed by at least \[X] minutes
 - Next departure cancelled
 - Track changed
 
