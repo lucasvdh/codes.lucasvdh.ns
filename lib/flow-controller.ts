@@ -188,14 +188,14 @@ export class FlowController {
     this.requireApiKey();
     const departures = await this.app.getApi().getDepartures(args.station.code, 25);
     const upcoming = departures.filter((d) => isStillUpcoming(d.actualDateTime || d.plannedDateTime));
-    const dirFilter = args.direction?.trim().toLowerCase();
-    const match = upcoming.find((d) => {
-      if (d.cancelled) return false;
-      if (!dirFilter) return true;
-      return d.direction?.toLowerCase().includes(dirFilter);
-    }) ?? upcoming.find((d) => !d.cancelled);
+    const direction = args.direction?.trim() ?? '';
+    const match = upcoming.find((d) => !d.cancelled && matchesFilter(d.direction, direction));
 
-    if (!match) throw new Error(this.t('error.no_upcoming_departures'));
+    if (!match) {
+      throw new Error(direction
+        ? this.t('error.no_upcoming_departures_direction', { direction })
+        : this.t('error.no_upcoming_departures'));
+    }
 
     const planned = new Date(match.plannedDateTime).getTime();
     const actual = match.actualDateTime ? new Date(match.actualDateTime).getTime() : planned;
@@ -284,14 +284,14 @@ export class FlowController {
     this.requireApiKey();
     const arrivals: Arrival[] = await this.app.getApi().getArrivals(args.station.code, 25);
     const upcoming = arrivals.filter((a) => isStillUpcoming(a.actualDateTime || a.plannedDateTime));
-    const filter = args.origin?.trim().toLowerCase();
-    const match = upcoming.find((a) => {
-      if (a.cancelled) return false;
-      if (!filter) return true;
-      return (a.origin || '').toLowerCase().includes(filter);
-    }) ?? upcoming.find((a) => !a.cancelled);
+    const origin = args.origin?.trim() ?? '';
+    const match = upcoming.find((a) => !a.cancelled && matchesFilter(a.origin, origin));
 
-    if (!match) throw new Error(this.t('error.no_upcoming_arrivals'));
+    if (!match) {
+      throw new Error(origin
+        ? this.t('error.no_upcoming_arrivals_origin', { origin })
+        : this.t('error.no_upcoming_arrivals'));
+    }
 
     const planned = new Date(match.plannedDateTime).getTime();
     const actual = match.actualDateTime ? new Date(match.actualDateTime).getTime() : planned;
@@ -426,6 +426,10 @@ export class FlowController {
       return false;
     }
   }
+}
+
+function matchesFilter(value: string | undefined, filter: string): boolean {
+  return !filter || (value ?? '').toLowerCase().includes(filter.toLowerCase());
 }
 
 export function crossedDelayThreshold(thresholdMinutes: number, state: DelayTriggerState): boolean {
