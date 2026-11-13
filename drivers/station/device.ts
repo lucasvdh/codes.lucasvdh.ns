@@ -213,23 +213,32 @@ class StationDevice extends Homey.Device {
     if (!prev) return;
 
     const trainChanged = prev.trainNumber !== snapshot.trainNumber;
-    const departureChanged =
-      trainChanged ||
-      prev.effectiveDateTime !== snapshot.effectiveDateTime ||
-      prev.actualTrack !== snapshot.actualTrack ||
-      prev.cancelled !== snapshot.cancelled;
+    const departureChanged = !trainChanged && (
+      prev.effectiveDateTime !== snapshot.effectiveDateTime
+      || prev.actualTrack !== snapshot.actualTrack
+      || prev.cancelled !== snapshot.cancelled
+    );
+
+    const departureTokens = {
+      departure_time: formatNlTime(snapshot.effectiveDateTime),
+      ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
+      destination: snapshot.destination,
+      track: snapshot.actualTrack,
+      delay_minutes: snapshot.delayMinutes,
+      cancelled: snapshot.cancelled,
+    };
+
+    if (trainChanged) {
+      this.homey.flow
+        .getDeviceTriggerCard('next_departure_switched')
+        .trigger(this, departureTokens)
+        .catch((e) => this.error('next_departure_switched trigger failed', e));
+    }
 
     if (departureChanged) {
       this.homey.flow
         .getDeviceTriggerCard('departure_changed')
-        .trigger(this, {
-          departure_time: formatNlTime(snapshot.effectiveDateTime),
-          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
-          destination: snapshot.destination,
-          track: snapshot.actualTrack,
-          delay_minutes: snapshot.delayMinutes,
-          cancelled: snapshot.cancelled,
-        })
+        .trigger(this, departureTokens)
         .catch((e) => this.error('departure_changed trigger failed', e));
     }
 

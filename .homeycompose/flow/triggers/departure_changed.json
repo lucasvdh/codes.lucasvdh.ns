@@ -6,9 +6,9 @@
     "de": "Nächste Abfahrt geändert"
   },
   "titleFormatted": {
-    "en": "Next departure from this station changed",
-    "nl": "Volgende vertrek van dit station is gewijzigd",
-    "de": "Nächste Abfahrt von diesem Bahnhof hat sich geändert"
+    "en": "Time, track or status of the next departure changed",
+    "nl": "Tijd, spoor of status van het volgende vertrek is gewijzigd",
+    "de": "Zeit, Gleis oder Status der nächsten Abfahrt hat sich geändert"
   },
   "args": [
     { "name": "device", "type": "device", "filter": "driver_id=station" }

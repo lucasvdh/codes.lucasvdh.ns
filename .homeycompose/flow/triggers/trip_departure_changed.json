@@ -6,9 +6,9 @@
     "de": "Nächster Zug geändert"
   },
   "titleFormatted": {
-    "en": "Next train on this route changed",
-    "nl": "Volgende trein op dit traject is gewijzigd",
-    "de": "Nächster Zug auf dieser Strecke hat sich geändert"
+    "en": "Time, track or status of the next train on this route changed",
+    "nl": "Tijd, spoor of status van de volgende trein op dit traject is gewijzigd",
+    "de": "Zeit, Gleis oder Status des nächsten Zuges auf dieser Strecke hat sich geändert"
   },
   "args": [
     { "name": "device", "type": "device", "filter": "driver_id=trip" }

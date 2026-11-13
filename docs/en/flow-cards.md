@@ -21,7 +21,13 @@ Fires when a new active disruption appears anywhere on the network.
 
 #### Next departure changed
 
-Fires when the upcoming departure shifts (different train, different time, different track, or it became cancelled).
+Fires when the time, track or cancellation status of the same next departure changes.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+
+#### Another train is now the next departure
+
+Fires when a different train becomes the next departure, for example after the previous one left.
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
@@ -42,7 +48,7 @@ Fires when the **same** upcoming train switches to a different track. Doesn't fi
 
 ### Trip device
 
-#### Next train changed / delayed / cancelled / track changed
+#### Next train changed / another train is now the next train / delayed / cancelled / track changed
 
 Same shape as the Station-device versions, scoped to the configured route. The "track changed" trigger reports the origin track of the trip's first leg.
 
