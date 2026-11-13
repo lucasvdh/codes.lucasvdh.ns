@@ -50,6 +50,7 @@ Pick a **From** and **To** station via autocomplete. Both fields search the full
 - Next train delayed by more than \[X] minutes
 - Delay of next train changed by at least \[X] minutes
 - Next train cancelled
+- Problem with next train
 - Track changed
 - Shorter train announced
 - Train is at least \[medium / high] busy

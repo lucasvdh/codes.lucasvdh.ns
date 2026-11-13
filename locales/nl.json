@@ -25,7 +25,8 @@
     "event_cancelled": "uitgevallen",
     "event_now_crowd": "nu {{level}}",
     "event_shorter_announced": "kortere trein aangekondigd",
-    "event_delay_increased": "+{{minutes}} min"
+    "event_delay_increased": "+{{minutes}} min",
+    "disruption": "storing"
   },
   "pair": {
     "title": "Kies een traject",

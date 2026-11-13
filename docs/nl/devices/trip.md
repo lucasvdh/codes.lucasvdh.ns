@@ -50,6 +50,7 @@ Kies een **Van**- en **Naar**-station via autocomplete. Beide velden doorzoeken 
 - Volgende trein vertraagd met meer dan \[X] minuten
 - Vertraging volgende trein veranderd met minstens \[X] minuten
 - Volgende trein uitgevallen
+- Probleem met volgende trein
 - Spoor gewijzigd
 - Kortere trein aangekondigd
 - Trein is minstens \[gemiddeld / hoog] druk

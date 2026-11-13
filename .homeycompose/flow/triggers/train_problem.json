@@ -1,0 +1,35 @@
+{
+  "id": "train_problem",
+  "title": {
+    "en": "Problem with next departure",
+    "nl": "Probleem met volgend vertrek",
+    "de": "Problem mit der nächsten Abfahrt"
+  },
+  "titleFormatted": {
+    "en": "Next departure is cancelled or delayed by more than [[minutes]] minutes",
+    "nl": "Volgend vertrek is uitgevallen of meer dan [[minutes]] minuten vertraagd",
+    "de": "Nächste Abfahrt fällt aus oder ist mehr als [[minutes]] Minuten verspätet"
+  },
+  "args": [
+    { "name": "device", "type": "device", "filter": "driver_id=station" },
+    { "name": "minutes", "type": "number", "min": 0, "max": 120, "step": 1,
+      "title": { "en": "Minutes", "nl": "Minuten", "de": "Minuten" },
+      "placeholder": { "en": "5", "nl": "5", "de": "5" } }
+  ],
+  "tokens": [
+    { "name": "departure_time", "type": "string",
+      "title": { "en": "Departure", "nl": "Vertrek", "de": "Abfahrt" }, "example": "08:42" },
+    { "name": "planned_departure_time", "type": "string",
+      "title": { "en": "Planned departure", "nl": "Gepland vertrek", "de": "Geplante Abfahrt" }, "example": "08:40" },
+    { "name": "expected_departure_time", "type": "string",
+      "title": { "en": "Expected departure", "nl": "Verwacht vertrek", "de": "Erwartete Abfahrt" }, "example": "08:42" },
+    { "name": "destination", "type": "string",
+      "title": { "en": "Destination", "nl": "Bestemming", "de": "Ziel" }, "example": "Amsterdam Centraal" },
+    { "name": "delay_minutes", "type": "number",
+      "title": { "en": "Delay (min)", "nl": "Vertraging (min)", "de": "Verspätung (Min)" }, "example": 12 },
+    { "name": "cancelled", "type": "boolean",
+      "title": { "en": "Cancelled", "nl": "Uitgevallen", "de": "Ausgefallen" }, "example": false },
+    { "name": "reason", "type": "string",
+      "title": { "en": "Reason", "nl": "Reden", "de": "Grund" }, "example": "+12 min" }
+  ]
+}

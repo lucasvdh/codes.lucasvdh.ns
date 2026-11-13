@@ -4,6 +4,7 @@ import type { DelayChangeState, DelayTriggerState, Departure, Disruption } from 
 import { getDelaySeconds, getEffectiveDateTime, getEffectiveTrack, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { departureTimeTokens, formatNlTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
+import { describeProblem, sameStatus, type TrainProblemState, type TrainStatus } from '../../lib/train-problem';
 
 interface DeviceStore {
   stationCode: string;
@@ -300,6 +301,22 @@ class StationDevice extends Homey.Device {
           train_type: snapshot.trainType,
         })
         .catch((e) => this.error('departure_cancelled trigger failed', e));
+    }
+
+    const status: TrainStatus = { delayMinutes: snapshot.delayMinutes, cancelled: snapshot.cancelled, disrupted: false };
+    const previousStatus: TrainStatus | null = trainChanged
+      ? null
+      : { delayMinutes: prev.delayMinutes, cancelled: prev.cancelled, disrupted: false };
+    if (!previousStatus || !sameStatus(status, previousStatus)) {
+      const problemState: TrainProblemState = { current: status, previous: previousStatus };
+      this.homey.flow
+        .getDeviceTriggerCard('train_problem')
+        .trigger(this, {
+          ...delayTokens,
+          cancelled: snapshot.cancelled,
+          reason: describeProblem(status, this.homey.__.bind(this.homey)),
+        }, problemState)
+        .catch((e) => this.error('train_problem trigger failed', e));
     }
   }
 
