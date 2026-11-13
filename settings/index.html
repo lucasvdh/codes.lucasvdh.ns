@@ -93,13 +93,14 @@
       }
 
       function testKey(key) {
-        const url = 'https://gateway.apiportal.ns.nl/reisinformatie-api/api/v2/stations?q=amsterdam&limit=1';
-        return fetch(url, { headers: { 'Ocp-Apim-Subscription-Key': key, Accept: 'application/json' } })
-          .then(function (r) {
-            if (r.ok) return { ok: true };
-            return { ok: false, message: describeHttpError(r.status) };
-          })
-          .catch(function (e) { return { ok: false, message: t('settings.err_network', { message: e.message || String(e) }) }; });
+        return new Promise(function (resolve) {
+          Homey.api('POST', '/test-api-key', { key: key }, function (err, result) {
+            if (err) return resolve({ ok: false, message: t('settings.err_network', { message: err.message || String(err) }) });
+            if (result.ok) return resolve({ ok: true });
+            if (result.status) return resolve({ ok: false, message: describeHttpError(result.status) });
+            resolve({ ok: false, message: t('settings.err_network', { message: result.message || '' }) });
+          });
+        });
       }
 
       Homey.get('apiKey', function (err, value) {

@@ -86,6 +86,12 @@
   "source": "https://github.com/lucasvdh/codes.lucasvdh.ns",
   "homepage": "https://homey-nederlandse-spoorwegen.gitbook.io/docs-en",
   "support": "https://github.com/lucasvdh/codes.lucasvdh.ns/issues",
+  "api": {
+    "testApiKey": {
+      "method": "POST",
+      "path": "/test-api-key"
+    }
+  },
   "flow": {
     "triggers": [
       {

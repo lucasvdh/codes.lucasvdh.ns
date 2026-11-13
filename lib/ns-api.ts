@@ -71,6 +71,8 @@ class TtlCache {
   }
 }
 
+export type ApiKeyCheck = { ok: true } | { ok: false; status?: number; message?: string };
+
 export class NsApiError extends Error {
   status: number;
   retryAfterMs?: number;
@@ -121,7 +123,7 @@ export class NsApi {
     return p;
   }
 
-  private requestRaw<T>(rawUrl: string): Promise<T> {
+  private requestRaw<T>(rawUrl: string, apiKey = this.apiKey): Promise<T> {
     return new Promise((resolve, reject) => {
       const url = new URL(rawUrl);
       const options: https.RequestOptions = {
@@ -130,7 +132,7 @@ export class NsApi {
         method: 'GET',
         timeout: 10000,
         headers: {
-          'Ocp-Apim-Subscription-Key': this.apiKey,
+          'Ocp-Apim-Subscription-Key': apiKey,
           Accept: 'application/json',
         },
       };
@@ -256,12 +258,14 @@ export class NsApi {
     });
   }
 
-  async testCredentials(): Promise<boolean> {
+  // Checks a key without storing it, so a key can be tested before saving.
+  async checkApiKey(apiKey: string): Promise<ApiKeyCheck> {
     try {
-      await this.searchStations('amsterdam', 1);
-      return true;
-    } catch {
-      return false;
+      await this.requestRaw(`${REISINFO_BASE}/api/v2/stations?q=amsterdam&limit=1`, apiKey);
+      return { ok: true };
+    } catch (e) {
+      if (e instanceof NsApiError) return { ok: false, status: e.status };
+      return { ok: false, message: (e as Error).message };
     }
   }
 }
