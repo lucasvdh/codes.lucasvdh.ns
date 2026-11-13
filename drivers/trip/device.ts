@@ -171,7 +171,7 @@ class TripDevice extends Homey.Device {
         .format(new Date()),
       10,
     );
-    if (nlHour >= 4 && nlHour < 17) {
+    if ((nlHour >= 4 && nlHour < 17) || !(await this.isLateTrainWarningUsed())) {
       this.previousLateTrainMinutes.clear();
       return;
     }
@@ -222,6 +222,16 @@ class TripDevice extends Homey.Device {
     if (secondToLast?.legs?.[0]?.origin?.plannedDateTime) liveKeys.add(`second_to_last:${secondToLast.legs[0].origin.plannedDateTime}`);
     for (const k of this.previousLateTrainMinutes.keys()) {
       if (!liveKeys.has(k)) this.previousLateTrainMinutes.delete(k);
+    }
+  }
+
+  private async isLateTrainWarningUsed(): Promise<boolean> {
+    try {
+      const flows = await this.homey.flow.getDeviceTriggerCard('trip_late_train_warning').getArgumentValues(this);
+      return flows.length > 0;
+    } catch (e) {
+      this.error('getArgumentValues failed', e);
+      return true;
     }
   }
 
