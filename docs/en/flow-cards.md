@@ -36,6 +36,12 @@ Fires when a different train becomes the next departure, for example after the p
 - **Argument:** *Minutes* (number).
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
 
+#### Delay of next departure changed by at least \[X] minutes
+
+Fires when the delay of the next departure has changed by at least X minutes since the last time this Flow fired, up or down. Small steps add up, so 2 → 3 → 4 → 7 minutes fires once with X = 5.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `delay_minutes`.
+
 #### Next departure cancelled
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `train_type`.
@@ -48,7 +54,7 @@ Fires when the **same** upcoming train switches to a different track. Doesn't fi
 
 ### Trip device
 
-#### Next train changed / another train is now the next train / delayed / cancelled / track changed
+#### Next train changed / another train is now the next train / delayed / delay changed / cancelled / track changed
 
 Same shape as the Station-device versions, scoped to the configured route. The "track changed" trigger reports the origin track of the trip's first leg.
 

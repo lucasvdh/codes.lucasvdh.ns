@@ -1,6 +1,6 @@
 import Homey from 'homey';
 import type NsApp from '../../app';
-import type { DelayTriggerState, Departure, Disruption } from '../../lib/types';
+import type { DelayChangeState, DelayTriggerState, Departure, Disruption } from '../../lib/types';
 import { getDelaySeconds, getEffectiveDateTime, getEffectiveTrack, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { departureTimeTokens, formatNlTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
@@ -242,19 +242,33 @@ class StationDevice extends Homey.Device {
         .catch((e) => this.error('departure_changed trigger failed', e));
     }
 
-    // The run listener decides whether the Flow's threshold was crossed.
+    // The run listeners decide per Flow whether its threshold was reached.
     const previousDelay = trainChanged ? null : prev.delayMinutes;
+    const delayTokens = {
+      departure_time: formatNlTime(snapshot.effectiveDateTime),
+      ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
+      destination: snapshot.destination,
+      delay_minutes: snapshot.delayMinutes,
+    };
+
     if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
       const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
         .getDeviceTriggerCard('departure_delayed')
-        .trigger(this, {
-          departure_time: formatNlTime(snapshot.effectiveDateTime),
-          ...departureTimeTokens(snapshot.plannedDateTime, snapshot.effectiveDateTime),
-          destination: snapshot.destination,
-          delay_minutes: snapshot.delayMinutes,
-        }, state)
+        .trigger(this, delayTokens, state)
         .catch((e) => this.error('departure_delayed trigger failed', e));
+    }
+
+    if (snapshot.delayMinutes !== (previousDelay ?? 0)) {
+      const changeState: DelayChangeState = {
+        trainKey: snapshot.trainNumber,
+        delayMinutes: snapshot.delayMinutes,
+        previousDelayMinutes: previousDelay,
+      };
+      this.homey.flow
+        .getDeviceTriggerCard('departure_delay_changed')
+        .trigger(this, delayTokens, changeState)
+        .catch((e) => this.error('departure_delay_changed trigger failed', e));
     }
 
     // Track changed: same train but track shifted

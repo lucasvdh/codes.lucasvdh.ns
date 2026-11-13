@@ -1,5 +1,5 @@
 import Homey from 'homey';
-import type { CrowdLevel, DelayTriggerState, Trip } from '../../lib/types';
+import type { CrowdLevel, DelayChangeState, DelayTriggerState, Trip } from '../../lib/types';
 import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { departureTimeTokens, formatNlTime, todayNlWallTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
@@ -461,19 +461,33 @@ class TripDevice extends Homey.Device {
         .catch((e) => this.error('trip_departure_changed trigger failed', e));
     }
 
-    // The run listener decides whether the Flow's threshold was crossed.
+    // The run listeners decide per Flow whether its threshold was reached.
     const previousDelay = trainChanged ? null : prev.delayMinutes;
+    const delayTokens = {
+      departure_time: formatNlTime(snapshot.effectiveDeparture),
+      ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
+      destination,
+      delay_minutes: snapshot.delayMinutes,
+    };
+
     if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
       const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
         .getDeviceTriggerCard('trip_departure_delayed')
-        .trigger(this, {
-          departure_time: formatNlTime(snapshot.effectiveDeparture),
-          ...departureTimeTokens(snapshot.plannedDeparture, snapshot.effectiveDeparture),
-          destination,
-          delay_minutes: snapshot.delayMinutes,
-        }, state)
+        .trigger(this, delayTokens, state)
         .catch((e) => this.error('trip_departure_delayed trigger failed', e));
+    }
+
+    if (snapshot.delayMinutes !== (previousDelay ?? 0)) {
+      const changeState: DelayChangeState = {
+        trainKey: snapshot.ctxRecon,
+        delayMinutes: snapshot.delayMinutes,
+        previousDelayMinutes: previousDelay,
+      };
+      this.homey.flow
+        .getDeviceTriggerCard('trip_delay_changed')
+        .trigger(this, delayTokens, changeState)
+        .catch((e) => this.error('trip_delay_changed trigger failed', e));
     }
 
     if (

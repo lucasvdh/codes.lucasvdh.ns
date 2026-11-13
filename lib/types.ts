@@ -198,3 +198,7 @@ export interface DelayTriggerState {
   delayMinutes: number;
   previousDelayMinutes: number | null;
 }
+
+export interface DelayChangeState extends DelayTriggerState {
+  trainKey: string;
+}

@@ -1,8 +1,10 @@
 import type Homey from 'homey';
 import { getDelaySecondsForLeg, isStillUpcoming } from './ns-api';
 import { currentOrNextNlWindow, formatNlTime, parseHHMM } from './tz';
+import { DelayChangeTracker } from './delay-change';
 import type {
   Arrival,
+  DelayChangeState,
   DelayTriggerState,
   Disruption,
   Trip,
@@ -25,6 +27,7 @@ interface StationAutocomplete {
 export class FlowController {
   private app: NsApp;
   private disruptionStartedTrigger?: Homey.FlowCardTrigger;
+  private delayChanges = new DelayChangeTracker();
 
   constructor(app: NsApp) {
     this.app = app;
@@ -87,6 +90,15 @@ export class FlowController {
         .registerRunListener(async (args: { minutes: number }, state: DelayTriggerState) => (
           crossedDelayThreshold(args.minutes, state)
         ));
+    }
+
+    for (const cardId of ['departure_delay_changed', 'trip_delay_changed']) {
+      this.flow
+        .getDeviceTriggerCard(cardId)
+        .registerRunListener(async (args: { device: Homey.Device; minutes: number }, state: DelayChangeState) => {
+          const flowKey = `${cardId}:${args.device.getData().id}:${args.minutes}`;
+          return this.delayChanges.shouldFire(flowKey, args.minutes, state);
+        });
     }
 
     this.flow
