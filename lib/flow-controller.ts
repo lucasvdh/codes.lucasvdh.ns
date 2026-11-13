@@ -1,6 +1,6 @@
 import type Homey from 'homey';
 import { getDelaySecondsForLeg, isStillUpcoming } from './ns-api';
-import { formatNlTime, nextNlWallTime, parseHHMM } from './tz';
+import { currentOrNextNlWindow, formatNlTime, parseHHMM } from './tz';
 import type {
   Arrival,
   DelayTriggerState,
@@ -351,24 +351,23 @@ export class FlowController {
       return this.buildEmptyWindowTokens(this.t('summary.invalid_time_format'));
     }
 
-    const startDate = nextNlWallTime(start.hours, start.minutes);
-    let endDate = nextNlWallTime(end.hours, end.minutes);
-    if (endDate.getTime() <= startDate.getTime()) {
-      endDate = new Date(endDate.getTime() + 24 * 60 * 60 * 1000);
-    }
+    const window = currentOrNextNlWindow(start, end);
+    const searchFrom = new Date(Math.max(window.start.getTime(), Date.now()));
 
     const trips: Trip[] = await this.app.getApi().planTrip({
       fromStation: fromCode,
       toStation: toCode,
-      dateTime: startDate.toISOString(),
+      dateTime: searchFrom.toISOString(),
     });
 
     const inWindow = trips.find((t) => {
-      const firstLeg = t.legs?.[0];
-      const dep = firstLeg?.origin?.plannedDateTime;
+      const origin = t.legs?.[0]?.origin;
+      const dep = origin?.plannedDateTime;
       if (!dep) return false;
       const ms = new Date(dep).getTime();
-      return ms >= startDate.getTime() && ms <= endDate.getTime();
+      return ms >= window.start.getTime()
+        && ms <= window.end.getTime()
+        && isStillUpcoming(origin.actualDateTime || dep);
     });
 
     if (!inWindow) {

@@ -71,16 +71,23 @@ export function todayNlWallTime(h: number, m: number): Date {
   return nlWallTimeToDate(today.year, today.month - 1, today.day, h, m);
 }
 
-// Next future Date where the NL wall clock reads h:m.
-// If today's h:m has already passed (in NL time), bumps to tomorrow.
-export function nextNlWallTime(h: number, m: number): Date {
-  const now = new Date();
+// Returns the window in progress, or else the next one. Supports windows
+// crossing midnight (e.g. 22:00 → 02:00).
+export function currentOrNextNlWindow(
+  from: { hours: number; minutes: number },
+  to: { hours: number; minutes: number },
+  now = new Date(),
+): { start: Date; end: Date } {
   const today = getWallClockParts(now);
-  let target = nlWallTimeToDate(today.year, today.month - 1, today.day, h, m);
-  if (target.getTime() <= now.getTime()) {
-    target = nlWallTimeToDate(today.year, today.month - 1, today.day + 1, h, m);
-  }
-  return target;
+  const crossesMidnight = to.hours * 60 + to.minutes <= from.hours * 60 + from.minutes;
+  const windowOn = (dayOffset: number) => {
+    const day = today.day + dayOffset;
+    return {
+      start: nlWallTimeToDate(today.year, today.month - 1, day, from.hours, from.minutes),
+      end: nlWallTimeToDate(today.year, today.month - 1, crossesMidnight ? day + 1 : day, to.hours, to.minutes),
+    };
+  };
+  return [-1, 0].map(windowOn).find((w) => w.end.getTime() > now.getTime()) ?? windowOn(1);
 }
 
 export function parseHHMM(input: string): { hours: number; minutes: number } | null {
