@@ -1,6 +1,6 @@
 import Homey from 'homey';
 import type NsApp from '../../app';
-import type { Departure, Disruption } from '../../lib/types';
+import type { DelayTriggerState, Departure, Disruption } from '../../lib/types';
 import { getDelaySeconds, getEffectiveDateTime, getEffectiveTrack, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { formatNlTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
@@ -201,14 +201,18 @@ class StationDevice extends Homey.Device {
         .catch((e) => this.error('departure_changed trigger failed', e));
     }
 
-    if (snapshot.delayMinutes > 0 && (!prev || prev.delayMinutes !== snapshot.delayMinutes)) {
+    // Fire on every delay change for the same train (or a new train); the run
+    // listener only lets it through when the Flow's threshold is crossed.
+    const previousDelay = prev && !trainChanged ? prev.delayMinutes : null;
+    if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
+      const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
         .getDeviceTriggerCard('departure_delayed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDateTime),
           destination: snapshot.destination,
           delay_minutes: snapshot.delayMinutes,
-        }, { minutes: snapshot.delayMinutes })
+        }, state)
         .catch((e) => this.error('departure_delayed trigger failed', e));
     }
 

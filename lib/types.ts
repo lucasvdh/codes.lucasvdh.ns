@@ -192,3 +192,10 @@ export interface TravelAdvice {
   trips: Trip[];
   source?: string;
 }
+
+// State passed to the departure_delayed / trip_departure_delayed triggers.
+// previousDelayMinutes is null when this is the first observation of the train.
+export interface DelayTriggerState {
+  delayMinutes: number;
+  previousDelayMinutes: number | null;
+}
