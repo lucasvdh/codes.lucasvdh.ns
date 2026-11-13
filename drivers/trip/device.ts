@@ -64,7 +64,7 @@ class TripDevice extends Homey.Device {
 
     const app = getNsApp(this);
     if (!app.hasApiKey()) {
-      await this.setUnavailable('NS API key not configured. Open app settings.');
+      await this.setUnavailable(this.homey.__('error.no_api_key'));
     }
 
     this.startPolling();
@@ -87,7 +87,7 @@ class TripDevice extends Homey.Device {
       await this.setAvailable().catch(() => {});
       await this.refresh().catch((e) => this.error('refresh after key change failed', e));
     } else {
-      await this.setUnavailable('NS API key not configured.').catch(() => {});
+      await this.setUnavailable(this.homey.__('error.no_api_key')).catch(() => {});
     }
   }
 
