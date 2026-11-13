@@ -164,16 +164,18 @@ class TripDevice extends Homey.Device {
       return;
     }
 
-    const eveningAnchor = todayNlWallTime(23, 30);
-    const cutoff = todayNlWallTime(28, 0); // tomorrow 04:00 NL local
+    // After midnight "today" is already the next day, so search from now until 04:00.
     const now = Date.now();
+    const afterMidnight = nlHour < 4;
+    const searchFrom = afterMidnight ? new Date(now) : todayNlWallTime(23, 30);
+    const cutoff = afterMidnight ? todayNlWallTime(4, 0) : todayNlWallTime(28, 0);
 
     let lateTrips: Trip[];
     try {
       lateTrips = await app.getApi().planTrip({
         fromStation: route.fromCode,
         toStation: route.toCode,
-        dateTime: eveningAnchor.toISOString(),
+        dateTime: searchFrom.toISOString(),
       });
     } catch (e) {
       this.error('late train fetch failed', e);
@@ -193,7 +195,7 @@ class TripDevice extends Homey.Device {
         return bMs - aMs;
       });
 
-    this.log(`late check: anchor=${eveningAnchor.toISOString()} cutoff=${cutoff.toISOString()} upcoming=${upcoming.length}`);
+    this.log(`late check: anchor=${searchFrom.toISOString()} cutoff=${cutoff.toISOString()} upcoming=${upcoming.length}`);
 
     const last = upcoming[0];
     const secondToLast = upcoming[1];
