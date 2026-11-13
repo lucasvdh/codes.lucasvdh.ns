@@ -46,6 +46,7 @@ Kies een **Van**- en **Naar**-station via autocomplete. Beide velden doorzoeken 
 **Triggers**
 
 - Volgende trein gewijzigd
+- Andere trein is nu de volgende trein
 - Volgende trein vertraagd met meer dan \[X] minuten
 - Volgende trein uitgevallen
 - Spoor gewijzigd

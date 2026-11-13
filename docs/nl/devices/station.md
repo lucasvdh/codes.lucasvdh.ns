@@ -44,6 +44,7 @@ Deze staan niet op de tegel, maar zijn wel grafiek-baar in Homey Insights:
 **Triggers**
 
 - Volgende vertrek gewijzigd
+- Andere trein is nu het volgende vertrek
 - Volgende vertrek vertraagd met meer dan \[X] minuten
 - Volgende vertrek uitgevallen
 - Spoor gewijzigd

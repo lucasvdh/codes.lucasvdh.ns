@@ -21,7 +21,13 @@ Vuurt als er een nieuwe actieve storing op het netwerk verschijnt.
 
 #### Volgende vertrek gewijzigd
 
-Vuurt als het komende vertrek verschuift (andere trein, andere tijd, ander spoor, of uitgevallen).
+Vuurt als de tijd, het spoor of de uitvalstatus van hetzelfde volgende vertrek verandert.
+
+- **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
+
+#### Andere trein is nu het volgende vertrek
+
+Vuurt als een andere trein het volgende vertrek wordt, bijvoorbeeld nadat de vorige is vertrokken.
 
 - **Tokens:** `departure_time`, `planned_departure_time`, `expected_departure_time`, `destination`, `track`, `delay_minutes`, `cancelled`.
 
@@ -42,7 +48,7 @@ Vuurt als **dezelfde** komende trein op een ander spoor wordt aangekondigd. Vuur
 
 ### Trajectapparaat
 
-#### Volgende trein gewijzigd / vertraagd / uitgevallen / spoor gewijzigd
+#### Volgende trein gewijzigd / andere trein is nu de volgende trein / vertraagd / uitgevallen / spoor gewijzigd
 
 Zelfde vorm als de Station-versies, maar dan voor de geconfigureerde route. De "spoor gewijzigd"-trigger meldt het vertrekspoor van het eerste traject-deel.
 
