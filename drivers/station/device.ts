@@ -133,8 +133,7 @@ class StationDevice extends Homey.Device {
       return (d.direction || '').toLowerCase().includes(filter);
     });
 
-    // Keep a cancelled train as "next" until its departure time passes, so the
-    // cancelled alarm and the departure_cancelled trigger can actually fire.
+    // Cancelled trains stay "next" so the cancelled alarm and trigger can fire.
     const next = matching[0];
 
     if (!next) {

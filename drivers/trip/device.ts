@@ -328,8 +328,7 @@ class TripDevice extends Homey.Device {
       const dep = t.legs?.[0]?.origin?.actualDateTime || t.legs?.[0]?.origin?.plannedDateTime;
       return isStillUpcoming(dep);
     });
-    // Keep a cancelled train as "next" until its departure time passes, so the
-    // cancelled alarm and the trip_cancelled trigger can actually fire.
+    // Cancelled trains stay "next" so the cancelled alarm and trigger can fire.
     const next = upcoming[0];
 
     if (!next || !next.legs?.length) {
