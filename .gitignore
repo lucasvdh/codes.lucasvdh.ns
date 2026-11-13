@@ -6,3 +6,4 @@
 .DS_Store
 .claude
 *:Zone.Identifier
+/.test-build/
