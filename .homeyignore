@@ -2,3 +2,7 @@
 /.vscode
 /.git
 *.md
+/test
+/.test-build
+/.github
+/tsconfig.test.json

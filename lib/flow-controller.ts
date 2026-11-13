@@ -428,7 +428,7 @@ export class FlowController {
   }
 }
 
-function matchesFilter(value: string | undefined, filter: string): boolean {
+export function matchesFilter(value: string | undefined, filter: string): boolean {
   return !filter || (value ?? '').toLowerCase().includes(filter.toLowerCase());
 }
 

@@ -7,7 +7,9 @@
     "homey-validate": "homey app validate --level verified",
     "homey-build": "homey app build",
     "homey-run": "homey app run",
-    "build": "tsc"
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test \".test-build/test/**/*.test.js\""
   },
   "dependencies": {},
   "devDependencies": {
