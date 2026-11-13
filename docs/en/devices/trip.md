@@ -24,7 +24,7 @@ Pick a **From** and **To** station via autocomplete. Both fields search the full
 | Destination | text | End-of-route station (after transfers). |
 | Track | text | Departure track at the origin. |
 | Delay (min) | number | Departure delay in minutes. |
-| Disruption | alarm | On if the trip carries a disruption/calamity message. |
+| Disruption | alarm | On if the trip has a disruption, calamity or alternative transport. Planned maintenance does not count. |
 | Cancelled | alarm | On if any leg of the trip is cancelled. |
 | Shorter train | alarm | On if NS announced reduced train length. |
 | Crowd level | enum (`unknown`/`low`/`medium`/`high`) | Forecast for the next train. |
