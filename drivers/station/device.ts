@@ -29,6 +29,8 @@ interface DepartureSnapshot {
 
 class StationDevice extends Homey.Device {
   private pollTimer?: NodeJS.Timeout;
+  // null = unknown (e.g. after restart, a stale warning may still be set).
+  private apiWarningShown: boolean | null = null;
   private lastSnapshot?: DepartureSnapshot;
 
   async onInit(): Promise<void> {
@@ -109,19 +111,37 @@ class StationDevice extends Homey.Device {
     const api = app.getApi();
     const code = this.getStationCode();
 
-    const [departures, disruptions] = await Promise.all([
-      api.getDepartures(code, 25).catch((e: unknown) => {
-        this.error('getDepartures failed', e);
-        return [] as Departure[];
-      }),
-      api.getStationDisruptions(code).catch((e: unknown) => {
-        this.error('getStationDisruptions failed', e);
-        return [] as Disruption[];
-      }),
+    // On an API error, keep the last known values instead of wiping them:
+    // an empty list would look like "no departures" / "disruption over".
+    const [departures, disruptions] = await Promise.allSettled([
+      api.getDepartures(code, 25),
+      api.getStationDisruptions(code),
     ]);
 
-    await this.updateDepartureCapabilities(departures);
-    await this.updateDisruptionCapability(disruptions);
+    if (departures.status === 'fulfilled') {
+      await this.updateDepartureCapabilities(departures.value);
+    } else {
+      this.error('getDepartures failed', departures.reason);
+    }
+    if (disruptions.status === 'fulfilled') {
+      await this.updateDisruptionCapability(disruptions.value);
+    } else {
+      this.error('getStationDisruptions failed', disruptions.reason);
+    }
+
+    const failed = departures.status === 'rejected' || disruptions.status === 'rejected';
+    await this.setApiWarning(failed);
+  }
+
+  private async setApiWarning(failed: boolean): Promise<void> {
+    if (failed === this.apiWarningShown) return;
+    this.apiWarningShown = failed;
+    try {
+      if (failed) await this.setWarning(this.homey.__('warning.api_unreachable'));
+      else await this.unsetWarning();
+    } catch (e) {
+      this.error('setWarning failed', e);
+    }
   }
 
   private async updateDepartureCapabilities(departures: Departure[]): Promise<void> {
