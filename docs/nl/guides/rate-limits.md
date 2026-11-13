@@ -40,6 +40,8 @@ Bij standaardinstellingen doet één Homey-installatie ongeveer:
 
 Dit zijn bovengrenzen voordat caching en coalescing toeslaan. In de praktijk halveren twee apparaten op hetzelfde station/traject hun calls automatisch.
 
+Tussen 17:00 en 04:00 doet een Trajectapparaat per verversing één extra call om de laatste treinen op te zoeken, maar alleen als een Flow *Late trein nadert* voor dat apparaat gebruikt.
+
 ## De werkelijke limiet aflezen
 
 Open de developer-logs van Homey terwijl de app draait. Je ziet regels zoals:

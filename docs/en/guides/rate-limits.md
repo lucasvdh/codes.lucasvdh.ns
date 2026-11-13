@@ -40,6 +40,8 @@ At default settings, a single Homey installation makes roughly:
 
 These are upper bounds before caching and coalescing kick in. In practice, two devices on the same station/route halve their calls automatically.
 
+Between 17:00 and 04:00 a Trip device makes one extra call per refresh to look up the last trains, but only when a Flow uses *Late train approaching* for that device.
+
 ## Reading the actual limit
 
 Open Homey's developer logs while the app is running. You'll see lines like:
