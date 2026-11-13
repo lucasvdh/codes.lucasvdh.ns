@@ -1,5 +1,5 @@
 import Homey from 'homey';
-import type { CrowdLevel, Trip } from '../../lib/types';
+import type { CrowdLevel, DelayTriggerState, Trip } from '../../lib/types';
 import { getDelaySecondsForLeg, isStillUpcoming, trackToNumber } from '../../lib/ns-api';
 import { formatNlTime, todayNlWallTime } from '../../lib/tz';
 import { getNsApp } from '../../lib/app-accessor';
@@ -417,14 +417,18 @@ class TripDevice extends Homey.Device {
         .catch((e) => this.error('trip_departure_changed trigger failed', e));
     }
 
-    if (snapshot.delayMinutes > 0 && (!prev || prev.delayMinutes !== snapshot.delayMinutes)) {
+    // Fire on every delay change for the same train (or a new train); the run
+    // listener only lets it through when the Flow's threshold is crossed.
+    const previousDelay = prev && !trainChanged ? prev.delayMinutes : null;
+    if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
+      const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };
       this.homey.flow
         .getDeviceTriggerCard('trip_departure_delayed')
         .trigger(this, {
           departure_time: formatNlTime(snapshot.effectiveDeparture),
           destination,
           delay_minutes: snapshot.delayMinutes,
-        }, { minutes: snapshot.delayMinutes })
+        }, state)
         .catch((e) => this.error('trip_departure_delayed trigger failed', e));
     }
 

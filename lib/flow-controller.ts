@@ -3,6 +3,7 @@ import { getDelaySecondsForLeg, isStillUpcoming } from './ns-api';
 import { formatNlTime, nextNlWallTime, parseHHMM } from './tz';
 import type {
   Arrival,
+  DelayTriggerState,
   Disruption,
   Trip,
   TripFare,
@@ -79,6 +80,14 @@ export class FlowController {
       .getConditionCard('has_active_disruption')
       .registerRunListener(this.onConditionHasDisruption.bind(this))
       .registerArgumentAutocompleteListener('station', this.onStationAutocomplete.bind(this));
+
+    for (const cardId of ['departure_delayed', 'trip_departure_delayed']) {
+      this.flow
+        .getDeviceTriggerCard(cardId)
+        .registerRunListener(async (args: { minutes: number }, state: DelayTriggerState) => (
+          crossedDelayThreshold(args.minutes, state)
+        ));
+    }
 
     this.flow
       .getDeviceTriggerCard('crowd_busy')
@@ -418,6 +427,14 @@ export class FlowController {
       return false;
     }
   }
+}
+
+// "Delayed by more than X minutes": only fire when the delay crosses the
+// threshold for this train, not on every minute-by-minute update above it.
+export function crossedDelayThreshold(thresholdMinutes: number, state: DelayTriggerState): boolean {
+  const threshold = Number(thresholdMinutes) || 0;
+  if (!state || state.delayMinutes <= threshold) return false;
+  return state.previousDelayMinutes === null || state.previousDelayMinutes <= threshold;
 }
 
 function extractPriceEur(trip: Trip): number {
