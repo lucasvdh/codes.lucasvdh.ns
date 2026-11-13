@@ -60,5 +60,8 @@
     "err_api_error": "NS-API-Fehler ({{status}}). Versuche es gleich nochmal.",
     "err_status": "NS-API gab Status {{status}} zurück.",
     "err_network": "Netzwerkfehler: {{message}}"
+  },
+  "warning": {
+    "api_unreachable": "NS-API nicht erreichbar. Die zuletzt bekannten Informationen werden angezeigt."
   }
 }

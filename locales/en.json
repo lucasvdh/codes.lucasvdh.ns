@@ -60,5 +60,8 @@
     "err_api_error": "NS API error ({{status}}). Try again in a moment.",
     "err_status": "NS API returned status {{status}}.",
     "err_network": "Network error: {{message}}"
+  },
+  "warning": {
+    "api_unreachable": "Could not reach the NS API. Showing the last known information."
   }
 }

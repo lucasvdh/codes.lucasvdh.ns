@@ -43,6 +43,8 @@ const CROWD_RANK: Record<string, number> = { unknown: 0, low: 1, medium: 2, high
 
 class TripDevice extends Homey.Device {
   private pollTimer?: NodeJS.Timeout;
+  // null = unknown (e.g. after restart, a stale warning may still be set).
+  private apiWarningShown: boolean | null = null;
   private lastSnapshot?: TripSnapshot;
   private previousTrains: Map<string, PerTrainSnapshot> = new Map();
   private previousLateTrainMinutes: Map<string, number> = new Map();
@@ -124,13 +126,27 @@ class TripDevice extends Homey.Device {
     try {
       trips = await app.getApi().planTrip({ fromStation: route.fromCode, toStation: route.toCode });
     } catch (e) {
+      // Keep the last known values; just flag that they may be stale.
       this.error('planTrip failed', e);
+      await this.setApiWarning(true);
       return;
     }
 
+    await this.setApiWarning(false);
     await this.updateCapabilities(trips);
     await this.checkPerTrainStateChanges(trips);
     await this.checkLateTrainWarnings(route);
+  }
+
+  private async setApiWarning(failed: boolean): Promise<void> {
+    if (failed === this.apiWarningShown) return;
+    this.apiWarningShown = failed;
+    try {
+      if (failed) await this.setWarning(this.homey.__('warning.api_unreachable'));
+      else await this.unsetWarning();
+    } catch (e) {
+      this.error('setWarning failed', e);
+    }
   }
 
   private async checkLateTrainWarnings(route: { fromCode: string; toCode: string }): Promise<void> {

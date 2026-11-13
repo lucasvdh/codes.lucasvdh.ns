@@ -60,5 +60,8 @@
     "err_api_error": "NS API-fout ({{status}}). Probeer het later opnieuw.",
     "err_status": "NS API gaf status {{status}}.",
     "err_network": "Netwerkfout: {{message}}"
+  },
+  "warning": {
+    "api_unreachable": "NS API niet bereikbaar. De laatst bekende informatie wordt getoond."
   }
 }
