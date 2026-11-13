@@ -201,8 +201,7 @@ class StationDevice extends Homey.Device {
         .catch((e) => this.error('departure_changed trigger failed', e));
     }
 
-    // Fire on every delay change for the same train (or a new train); the run
-    // listener only lets it through when the Flow's threshold is crossed.
+    // The run listener decides whether the Flow's threshold was crossed.
     const previousDelay = prev && !trainChanged ? prev.delayMinutes : null;
     if (snapshot.delayMinutes > 0 && snapshot.delayMinutes !== previousDelay) {
       const state: DelayTriggerState = { delayMinutes: snapshot.delayMinutes, previousDelayMinutes: previousDelay };

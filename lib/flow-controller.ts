@@ -429,8 +429,6 @@ export class FlowController {
   }
 }
 
-// "Delayed by more than X minutes": only fire when the delay crosses the
-// threshold for this train, not on every minute-by-minute update above it.
 export function crossedDelayThreshold(thresholdMinutes: number, state: DelayTriggerState): boolean {
   const threshold = Number(thresholdMinutes) || 0;
   if (!state || state.delayMinutes <= threshold) return false;
