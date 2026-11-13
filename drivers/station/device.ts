@@ -29,7 +29,7 @@ interface DepartureSnapshot {
 
 class StationDevice extends Homey.Device {
   private pollTimer?: NodeJS.Timeout;
-  // null = unknown (e.g. after restart, a stale warning may still be set).
+  // null: a warning from before a restart may still be set.
   private apiWarningShown: boolean | null = null;
   private lastSnapshot?: DepartureSnapshot;
 
@@ -111,8 +111,7 @@ class StationDevice extends Homey.Device {
     const api = app.getApi();
     const code = this.getStationCode();
 
-    // On an API error, keep the last known values instead of wiping them:
-    // an empty list would look like "no departures" / "disruption over".
+    // On failure keep the last values; an empty list would read as "no disruptions".
     const [departures, disruptions] = await Promise.allSettled([
       api.getDepartures(code, 25),
       api.getStationDisruptions(code),
