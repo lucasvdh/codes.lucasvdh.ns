@@ -81,7 +81,7 @@ class TripDriver extends Homey.Driver {
 
     session.setHandler('search', async (query: string): Promise<RouteEndpoint[]> => {
       const app = getNsApp(this);
-      if (!app.hasApiKey()) throw new Error('NS API key not configured. Open app settings first.');
+      if (!app.hasApiKey()) throw new Error(this.homey.__('error.no_api_key'));
       if (!query || query.trim().length < 2) return [];
       try {
         const stations = await app.getApi().searchStations(query, 12);
@@ -115,7 +115,7 @@ class TripDriver extends Homey.Driver {
     session.setHandler('getDevice', async (): Promise<ListDevice> => {
       this.log('getDevice called, pendingFrom:', pendingFrom?.name, 'pendingTo:', pendingTo?.name);
       if (!pendingFrom || !pendingTo) {
-        throw new Error('Pick a from and to station first.');
+        throw new Error(this.homey.__('error.pick_route_first'));
       }
       return {
         name: `${pendingFrom.name} → ${pendingTo.name}`,
